@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * This file contains the component that describes the app homepage
+ *******************************************************************************/
 import React, { Component } from 'react';
 import './Homepage.css';
 

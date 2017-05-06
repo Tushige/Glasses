@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * This file contains the component and logic of user signin
+ *******************************************************************************/
 import React, {Component} from 'react';
 import config from '../../config.js';
 import {
@@ -27,6 +30,7 @@ class Signin extends Component {
             password: '',
         };
     }
+
     /*
      * check if password is valid
      */
@@ -36,6 +40,7 @@ class Signin extends Component {
         else if(len>3) return "warning";
         else if(len>0) return "error";
     }
+
     /*
      * check if password is valid
      */
@@ -45,6 +50,7 @@ class Signin extends Component {
         else if(len>3) return "warning";
         else if(len>0) return "error";
     }
+
     /*
      * Signin only allowed on valid username and password
      */
@@ -54,27 +60,33 @@ class Signin extends Component {
         }
         return false;
     }
+
     /*
      * updates username as user types
      */
     handleUsername(event) {
         this.setState({username: event.target.value});
     }
+
     /*
      * updates password as user types
      */
     handlePassword(event) {
         this.setState({password: event.target.value});
     }
+
+    /*
+     * attempts to sign in user
+     * if successful, stores the user token
+     * if not, shows error to the user
+     */
     signinHandler(event) {
         event.preventDefault();
         try {
             var signinPromise = this.signin(this.state.username, this.state.password);
             let userToken;
             signinPromise.then((userToken) => {
-                console.log(this.props.route);
                 this.props.childProps.updateUserToken(userToken);
-                alert(userToken);
             })
             .catch((err) => {
                 alert(err);
@@ -84,6 +96,7 @@ class Signin extends Component {
             alert(err);
         }
     }
+
     /*
      * Signin the user
      */

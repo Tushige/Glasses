@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * This file contains the component that is responsible for routing urls to views
+ *******************************************************************************/
 import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom';
 
@@ -11,8 +14,8 @@ export default class Routes extends Component {
         return (
             <Switch>
                 <Route path='/' exact component={Homepage} />
-                <Route path='/signup' exact component={Signup}/>
-                <Route path='/signin' exact component={Signin}/>
+                <Route path='/signup' exact render={() => <Signup childProps={this.props.childProps}/>}/>
+                <Route path='/signin' exact render={() => <Signin childProps={this.props.childProps}/>}/>
                 <Route component={Error404} />
             </Switch>
         )

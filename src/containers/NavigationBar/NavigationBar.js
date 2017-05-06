@@ -1,20 +1,33 @@
+/*******************************************************************************
+ * This file contains the component that describes the 'navigation bar' that
+ * is shared amongst all views
+ *******************************************************************************/
 import React, { Component } from 'react';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Routes from './../../Routes';
+import {SignOutBtn, SignInBtn, SignUpBtn} from './NavButtons';
 
-function SignUpBtn() {
-    return (
-        <NavItem href="/signup"> Sign Up</NavItem>
-    )
-}
-function SignInBtn() {
-    return (
-        <NavItem href="/signin"> Sign In</NavItem>
-    )
-}
 class NavigationBar extends Component {
     render() {
+        let nav;
+        // show SignOut button if user is already logged in
+        if (this.props.isSignedin===true) {
+            nav = (
+                <Nav pullRight>
+                    <SignOutBtn updateUserToken={this.props.updateUserToken}></SignOutBtn>
+                </Nav>
+            )
+        }
+        // if no logged in user, show SignUp and Signin buttons
+        else {
+            nav = (
+                <Nav pullRight>
+                    <SignUpBtn></SignUpBtn>
+                    <SignInBtn></SignInBtn>
+                </Nav>
+            )
+        }
         return (
             <div>
                 <Navbar fluid collapseOnSelect>
@@ -26,10 +39,7 @@ class NavigationBar extends Component {
                     </Navbar.Header>
 
                     <Navbar.Collapse>
-                        <Nav pullRight>
-                            <SignUpBtn></SignUpBtn>
-                            <SignInBtn></SignInBtn>
-                        </Nav>
+                        {nav}
                     </Navbar.Collapse>
                 </Navbar>
             </div>

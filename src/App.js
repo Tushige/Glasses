@@ -1,7 +1,11 @@
+/*******************************************************************************
+ * This file contains the root component of our application
+ *******************************************************************************/
 import React, { Component } from 'react';
 import NavigationBar from './containers/NavigationBar/NavigationBar';
 import './App.css';
 import Routes from './Routes';
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -21,7 +25,9 @@ class App extends Component {
         };
         return (
             <div className="App container">
-                <NavigationBar>
+                <NavigationBar
+                    isSignedin={this.state.userToken!==null}
+                    updateToken={this.updateUserToken}>
                 </NavigationBar>
                 <Routes childProps={childProps}/>
             </div>
