@@ -25,10 +25,11 @@ class Signin extends Component {
         this.handleUsername = this.handleUsername.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.signinHandler = this.signinHandler.bind(this);
-        this.signin = this.signin.bind(this);
+        this.authenticateUser = this.authenticateUser.bind(this);
         this.state = {
             username: '',
             password: '',
+            isLoading: false,
         };
     }
 
@@ -83,8 +84,11 @@ class Signin extends Component {
      */
     signinHandler(event) {
         event.preventDefault();
+        this.setState({
+            isLoading:true,
+        });
         try {
-            var signinPromise = this.signin(this.state.username, this.state.password);
+            var signinPromise = this.authenticateUser(this.state.username, this.state.password);
             // signin success!
             signinPromise.then((userToken) => {
                 this.props.childProps.updateUserToken(userToken);
@@ -104,7 +108,7 @@ class Signin extends Component {
     /*
      * Signin the user
      */
-    signin(username, password) {
+    authenticateUser(username, password) {
         const user = createCognitoUser(username);
         const authDetails = createUserAuthDetails(username, password);
 
@@ -120,6 +124,7 @@ class Signin extends Component {
         });
     }
     render() {
+        let isLoading = this.state.isLoading;
         return (
             <div>
                 <Form horizontal onSubmit={this.signinHandler}>
@@ -163,12 +168,13 @@ class Signin extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <Col smOffset={2} sm={1}>
+                        <Col smOffset={2} sm={2}>
                             <Button
                                 type="submit"
+                                bsStyle="primary"
                                 block
-                                disabled={! this.validateForm()}>
-                                Sign In
+                                disabled={!this.validateForm() || isLoading}>
+                                {isLoading ? 'Signing in...':'Sign In'}
                             </Button>
                         </Col>
                     </FormGroup>
