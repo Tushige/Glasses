@@ -21,6 +21,9 @@ class NavigationBar extends Component {
         }
         this.props.updateUserToken(null);
     }
+    SigninHandler() {
+        console.log(this);
+    }
     render() {
         let nav;
         // show SignOut button if user is already logged in
@@ -35,8 +38,8 @@ class NavigationBar extends Component {
         else {
             nav = (
                 <Nav pullRight>
-                    <NavItem href="/signup"> Sign Up</NavItem>
-                    <NavItem href="/signin"> Sign In</NavItem>
+                    <NavItem href="/signup">Sign Up</NavItem>
+                    <NavItem href="/signin" onClick={this.SigninHandler}>Sign In</NavItem>
                 </Nav>
             )
         }

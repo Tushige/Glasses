@@ -12,6 +12,11 @@ import {
     Col,
 } from 'react-bootstrap';
 
+/*
+ * withRouter gives us history info in our Signin component's props
+ */
+import {withRouter} from 'react-router-dom';
+
 import {createCognitoUser, createUserAuthDetails} from '../../libs/user';
 
 class Signin extends Component {
@@ -80,10 +85,13 @@ class Signin extends Component {
         event.preventDefault();
         try {
             var signinPromise = this.signin(this.state.username, this.state.password);
-            let userToken;
+            // signin success!
             signinPromise.then((userToken) => {
                 this.props.childProps.updateUserToken(userToken);
+                // redirect to homepage
+                this.props.history.push('/')
             })
+            // sign in failure!
             .catch((err) => {
                 alert(err);
             });
@@ -170,4 +178,4 @@ class Signin extends Component {
     }
 }
 
-export default Signin;
+export default withRouter(Signin);
