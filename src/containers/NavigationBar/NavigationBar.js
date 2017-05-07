@@ -6,16 +6,28 @@ import React, { Component } from 'react';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Routes from './../../Routes';
-import {SignOutBtn, SignInBtn, SignUpBtn} from './NavButtons';
+import {getSignedInUser} from '../../libs/user';
 
 class NavigationBar extends Component {
+    /*
+     * It turns out we have to call signOut on the cognitoUser object as specified
+     * by amazon-cognito-identity sdk.
+     * we also clear the token from the app state.
+     */
+    signOutHandler() {
+        const cognitoUser = getSignedInUser();
+        if (cognitoUser) {
+            cognitoUser.signOut();
+        }
+        this.props.updateUserToken(null);
+    }
     render() {
         let nav;
         // show SignOut button if user is already logged in
         if (this.props.isSignedin===true) {
             nav = (
                 <Nav pullRight>
-                    <SignOutBtn updateUserToken={this.props.updateUserToken}></SignOutBtn>
+                    <NavItem href='/' onClick={this.signOutHandler}> Sign Out</NavItem>
                 </Nav>
             )
         }
@@ -23,8 +35,8 @@ class NavigationBar extends Component {
         else {
             nav = (
                 <Nav pullRight>
-                    <SignUpBtn></SignUpBtn>
-                    <SignInBtn></SignInBtn>
+                    <NavItem href="/signup"> Sign Up</NavItem>
+                    <NavItem href="/signin"> Sign In</NavItem>
                 </Nav>
             )
         }

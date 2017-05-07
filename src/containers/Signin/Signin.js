@@ -2,7 +2,6 @@
  * This file contains the component and logic of user signin
  *******************************************************************************/
 import React, {Component} from 'react';
-import config from '../../config.js';
 import {
     Form,
     FormGroup,
@@ -12,11 +11,8 @@ import {
     Checkbox,
     Col,
 } from 'react-bootstrap';
-import {
-    CognitoUserPool,
-    AuthenticationDetails,
-    CognitoUser
-} from 'amazon-cognito-identity-js';
+
+import {createCognitoUser, createUserAuthDetails} from '../../libs/user';
 
 class Signin extends Component {
     constructor(props) {
@@ -101,19 +97,9 @@ class Signin extends Component {
      * Signin the user
      */
     signin(username, password) {
-        const userPool = new CognitoUserPool({
-            UserPoolId: config.cognito.USER_POOL_ID,
-            ClientId: config.cognito.APP_CLIENT_ID
-        });
-        const userCredentials = {
-            Username: username,
-            Password: password
-        };
-        const user = new CognitoUser({
-            Username: username,
-            Pool:userPool
-        });
-        const authDetails = new AuthenticationDetails(userCredentials);
+        const user = createCognitoUser(username);
+        const authDetails = createUserAuthDetails(username, password);
+
         return new Promise(function(resolve, reject) {
             user.authenticateUser(authDetails, {
                 onSuccess: function(result) {
