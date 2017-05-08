@@ -22,7 +22,7 @@ import {createUserPool,
         createUserAuthDetails,
         createCognitoUserAttribute,
 } from '../../libs/user';
-
+import SignupForm from './SignupForm';
 class Signup extends Component {
     constructor(props) {
         super(props);
@@ -31,12 +31,14 @@ class Signup extends Component {
         this.passwordHandler = this.passwordHandler.bind(this);
         this.vpasswordHandler = this.vpasswordHandler.bind(this);
         this.signupHandler = this.signupHandler.bind(this);
+
         this.state = {
             email: '',
             password: '',
             vpassword: '',
             isLoading: false,
             cognitoUser: null,
+            isVerified: false,
         };
     }
 
@@ -67,37 +69,32 @@ class Signup extends Component {
          this.setState({
              isLoading: true,
          });
-         console.log("signing up!");
          const userPool = createUserPool();
          const attributeEmail = createCognitoUserAttribute('email', this.state.email);
          const username = this.state.email;
          const password = this.state.password;
          let attributeList = [];
          attributeList.push(attributeEmail);
-         console.log("outside promise");
          let signupPromise = new Promise((resolve, reject) => {
-             console.log("inside promise");
              userPool.signUp(username, password, attributeList, null, function(err, res) {
                  if (err) {
-                     console.log("first error");
-                     reject("first signup failed");
+                     // we need to display informative error message on failure
+                     reject(err);
                  }
-                 console.log('resolved with ' + res);
-                 console.log("user is " + res.user.getUsername());
-                 alert("resolved with " + res.user);
+                 console.log(res);
                  resolve(res.user);
              });
          });
          signupPromise.then((res) => {
-             console.log("promise resolved");
+             console.log("resolved")
              this.setState({
                  cognitoUser: res.getUsername(),
                  isLoading: false,
              });
          })
          .catch((err)=>{
-             console.log("promise rejected");
-             alert("signup failed with " + err);
+             // we need to display informative error message on failure
+             alert(err);
          });
      }
     render() {
@@ -124,22 +121,12 @@ class Signup extends Component {
         }
         let isLoading = this.state.isLoading;
         return (
-            <Form horizontal onSubmit={this.signupHandler}>
-                <FormField childProps={emailProps}/>
-                <FormField childProps={passProps}/>
-                <FormField childProps={vpassProps}/>
-                <FormGroup>
-                    <Col smOffset={2} sm={2}>
-                        <Button
-                            type="submit"
-                            bsStyle="primary"
-                            block
-                            disabled={isLoading}>
-                            {isLoading ? 'Signing up...':'Sign Up'}
-                        </Button>
-                    </Col>
-                </FormGroup>
-            </Form>
+            <SignupForm signupHandler={this.signupHandler}
+                emailProps={emailProps}
+                passProps={passProps}
+                vpassProps={vpassProps}
+                isLoading={isLoading}
+            />
         )
     }
 }
