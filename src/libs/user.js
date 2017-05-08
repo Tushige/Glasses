@@ -5,7 +5,8 @@ import config from '../config.js';
 import {
     CognitoUserPool,
     AuthenticationDetails,
-    CognitoUser
+    CognitoUser,
+    CognitoUserAttribute,
 } from 'amazon-cognito-identity-js';
 
 /*
@@ -43,7 +44,7 @@ function createUserAuthDetails(username, password) {
 }
 
 /*
- *
+ * {CognitoUser} @return: the current signed in user
  */
 function getSignedInUser() {
     const userPool = createUserPool();
@@ -52,7 +53,7 @@ function getSignedInUser() {
 }
 
 /*
- *
+ * Used in page loads to get currently signed in user's token
  */
 function getUserToken() {
     const cognitoUser = getSignedInUser();
@@ -69,7 +70,20 @@ function getUserToken() {
         });
     });
 }
+/*
+ * returns a new CognitoUserAttribute object with the given name:value pair
+ * used in Sign up
+ */
+function createCognitoUserAttribute(name, value) {
+    const data = {
+        Name: name,
+        Value: value
+    }
+    return new CognitoUserAttribute(data);
+}
 export {createCognitoUser,
+        createUserPool,
         createUserAuthDetails,
         getSignedInUser,
+        createCognitoUserAttribute,
         getUserToken};
