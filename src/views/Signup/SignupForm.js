@@ -5,8 +5,7 @@ import {
     Button,
     Col,
 } from 'react-bootstrap';
-import FormField from './FormField';
-
+import FormField from '../../containers/FormComponents/FormField';
 class SignupForm extends Component {
     render() {
         let isLoading = this.props.isLoading;
@@ -27,7 +26,7 @@ class SignupForm extends Component {
                     </Col>
                 </FormGroup>
             </Form>
-        )
+        );
     }
 }
 export default SignupForm;

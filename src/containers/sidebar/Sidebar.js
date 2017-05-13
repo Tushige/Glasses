@@ -4,7 +4,9 @@
  *******************************************************************************/
 import React, { Component } from 'react';
 import './sidebar.css';
-import { Link } from 'react-router-dom';
+import {Link,
+        withRouter,
+} from 'react-router-dom';
 import {Nav,
         Navbar,
         Button,
@@ -26,6 +28,7 @@ const defaultStyles = {
         },
         sidebarToggler: {
             left:0,
+            zIndex:2,
         },
     },
     sidebar_open: {
@@ -42,6 +45,7 @@ const defaultStyles = {
         },
         sidebarToggler: {
             left: 250,
+            zIndex:2,
         },
     },
 };
@@ -72,6 +76,8 @@ class Sidebar extends Component {
         }
         // clear the token that we get on sign in
         this.props.updateUserToken(null);
+        // redirect to homepage
+        this.props.history.push('/');
     }
 
     /*
@@ -115,4 +121,4 @@ class Sidebar extends Component {
     }
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);

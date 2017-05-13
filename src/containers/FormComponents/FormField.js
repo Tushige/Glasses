@@ -1,6 +1,12 @@
 /*
  * This file contains a component that describes how a single Form field looks like
- * Used By signup Form
+ * Used By Forms
+ * expects the following in its props.childProps
+ *  1. textLabel
+ *  2. inputType
+ *  3. inputValue
+ *  4. placeholder
+ *  5. inputHandler
  */
 import React, {Component} from 'react';
 import {

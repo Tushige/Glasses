@@ -4,11 +4,11 @@
 import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom';
 
-import Homepage from './containers/Home/Homepage';
-import Signup from './containers/Signup/Signup';
-import Signin from './containers/Signin/Signin';
-import NewReading from './containers/NewReading/NewReading';
-import Error404 from './containers/errors/Error404';
+import Homepage from './views/Home/Homepage';
+import Signup from './views/Signup/Signup';
+import Signin from './views/Signin/Signin';
+import NewReading from './views/NewReading/NewReading';
+import Error404 from './views/errors/Error404';
 
 export default class Routes extends Component {
     render() {

@@ -1,0 +1,17 @@
+#readingForm-container {
+    text-align: center;
+    width:100%;
+    margin: 0 auto;
+}
+#readingForm-container form {
+    padding-top: 100px;
+    width: 70%;
+}
+
+#memo-text {
+    height:300px;
+    text-align: left;
+    outline:none;
+    border:1px solid #8c8c8c;
+    color:#8c8c8c;
+}
