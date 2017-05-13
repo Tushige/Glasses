@@ -6,7 +6,7 @@ import NavigationBar from './containers/NavigationBar/NavigationBar';
 import './App.css';
 import Routes from './Routes';
 import {getUserToken} from './libs/user';
-
+import Sidebar from './containers/sidebar/Sidebar';
 class App extends Component {
     constructor(props) {
         super(props);
@@ -54,12 +54,22 @@ class App extends Component {
             userToken: this.state.userToken,
             updateUserToken: this.updateUserToken,
         };
+        let navigation = (
+            <NavigationBar
+                isSignedin={isSignedin}
+                updateToken={this.updateUserToken}>
+            </NavigationBar>
+        );
+        if (isSignedin) {
+            navigation = (
+                <Sidebar
+                    updateUserToken={this.updateUserToken}>
+                </Sidebar>
+            )
+        }
         return (
             <div className="App container">
-                <NavigationBar
-                    isSignedin={isSignedin}
-                    updateToken={this.updateUserToken}>
-                </NavigationBar>
+                {navigation}
                 <Routes childProps={childProps}/>
             </div>
     );
