@@ -4,12 +4,9 @@
  */
 import React, {Component} from 'react';
 import {
-    Form,
     FormGroup,
     FormControl,
     ControlLabel,
-    Button,
-    Checkbox,
     Col,
 } from 'react-bootstrap';
 

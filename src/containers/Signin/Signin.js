@@ -17,7 +17,7 @@ import {
  */
 import {withRouter} from 'react-router-dom';
 
-import {createCognitoUser, createUserAuthDetails} from '../../libs/user';
+import {createCognitoUser, createUserAuthDetails, authenticateUser} from '../../libs/user';
 
 class Signin extends Component {
     constructor(props) {
@@ -25,7 +25,6 @@ class Signin extends Component {
         this.handleUsername = this.handleUsername.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.signinHandler = this.signinHandler.bind(this);
-        this.authenticateUser = this.authenticateUser.bind(this);
         this.state = {
             username: '',
             password: '',
@@ -88,7 +87,7 @@ class Signin extends Component {
             isLoading:true,
         });
         try {
-            var signinPromise = this.authenticateUser(this.state.username, this.state.password);
+            var signinPromise = authenticateUser(undefined, this.state.username, this.state.password);
             // signin success!
             signinPromise.then((userToken) => {
                 this.props.childProps.updateUserToken(userToken);
@@ -97,6 +96,7 @@ class Signin extends Component {
             })
             // sign in failure!
             .catch((err) => {
+                console.log("signin failure with error: " + err);
                 alert(err);
             });
         }
@@ -105,24 +105,6 @@ class Signin extends Component {
         }
     }
 
-    /*
-     * Signin the user
-     */
-    authenticateUser(username, password) {
-        const user = createCognitoUser(username);
-        const authDetails = createUserAuthDetails(username, password);
-
-        return new Promise(function(resolve, reject) {
-            user.authenticateUser(authDetails, {
-                onSuccess: function(result) {
-                    resolve(result.getIdToken().getJwtToken());
-                },
-                onFailure: function(err) {
-                    reject(err);
-                }
-            });
-        });
-    }
     render() {
         let isLoading = this.state.isLoading;
         return (

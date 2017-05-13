@@ -65,7 +65,11 @@ function getUserToken() {
             if(err) {
                 reject("no signed in user");
             } else {
-                resolve(session.getIdToken().jwtToken);
+                const token = session.getIdToken().jwtToken;
+                if (token) {
+                    resolve(token)
+                }
+                reject("no signed in user");
             }
         });
     });
@@ -81,9 +85,31 @@ function createCognitoUserAttribute(name, value) {
     }
     return new CognitoUserAttribute(data);
 }
+/*
+ * helper function to authenticate a user given credentials
+ * resolve returns the user Token
+ */
+function authenticateUser(user=undefined, username, password) {
+    if (user===undefined) {
+        user = createCognitoUser(username);
+    }
+    const authDetails = createUserAuthDetails(username, password);
+
+    return new Promise(function(resolve, reject) {
+        user.authenticateUser(authDetails, {
+            onSuccess: function(result) {
+                resolve(result.getIdToken().getJwtToken());
+            },
+            onFailure: function(err) {
+                reject(err);
+            }
+        });
+    });
+}
 export {createCognitoUser,
         createUserPool,
         createUserAuthDetails,
         getSignedInUser,
         createCognitoUserAttribute,
-        getUserToken};
+        getUserToken,
+        authenticateUser};

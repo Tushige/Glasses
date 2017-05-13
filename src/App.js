@@ -40,6 +40,7 @@ class App extends Component {
         })
         .catch((err) => {
             // no signed user present
+            console.log("no signed in user");
         });
     }
 
@@ -48,10 +49,14 @@ class App extends Component {
             userToken: this.state.userToken,
             updateUserToken: this.updateUserToken,
         };
+        let isSignedin = true;
+        if (this.state.userToken === null || this.state.userToken === undefined) {
+            isSignedin = false;
+        }
         return (
             <div className="App container">
                 <NavigationBar
-                    isSignedin={this.state.userToken!==null}
+                    isSignedin={isSignedin}
                     updateToken={this.updateUserToken}>
                 </NavigationBar>
                 <Routes childProps={childProps}/>

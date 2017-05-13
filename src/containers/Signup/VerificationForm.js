@@ -7,14 +7,12 @@ import {
 } from 'react-bootstrap';
 import FormField from './FormField';
 
-class SignupForm extends Component {
+class VerificationForm extends Component {
     render() {
         let isLoading = this.props.isLoading;
         return (
-            <Form horizontal onSubmit={this.props.signupHandler}>
-                <FormField childProps={this.props.emailProps}/>
-                <FormField childProps={this.props.passProps}/>
-                <FormField childProps={this.props.vpassProps}/>
+            <Form horizontal onSubmit={this.props.submitHandler}>
+                <FormField childProps={this.props.childProps}/>
                 <FormGroup>
                     <Col smOffset={2} sm={2}>
                         <Button
@@ -22,12 +20,13 @@ class SignupForm extends Component {
                             bsStyle="primary"
                             block
                             disabled={isLoading}>
-                            {isLoading ? 'Signing up...':'Sign Up'}
+                            {isLoading ? 'Verifying...':'Verify'}
                         </Button>
                     </Col>
                 </FormGroup>
             </Form>
-        )
+        );
     }
 }
-export default SignupForm;
+
+export default VerificationForm;
