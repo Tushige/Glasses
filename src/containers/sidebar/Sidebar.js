@@ -49,8 +49,10 @@ const defaultStyles = {
 class Sidebar extends Component {
     constructor(props) {
         super(props);
+
         this.sidebarToggleHandler = this.sidebarToggleHandler.bind(this);
         this.signOutHandler = this.signOutHandler.bind(this);
+
         this.state = {
             isOpen: false,
             sidebar_style: defaultStyles.sidebar_closed.sidebar,
@@ -71,6 +73,7 @@ class Sidebar extends Component {
         // clear the token that we get on sign in
         this.props.updateUserToken(null);
     }
+
     /*
      * shows/hides the sidebar
      */
@@ -97,6 +100,7 @@ class Sidebar extends Component {
                 <div ref="sidenav" style={this.state.sidebar_style}>
                     <h2 id="sidebar-title">Glasses</h2>
                     <Link to='/' className="linkItems">Home</Link>
+                    <Link to='/newreading' className="linkItems">Add a reading</Link>
                     <Link to='/' className="linkItems">Reading</Link>
                     <Link to='/' className="linkItems" onClick={this.signOutHandler}>Sign Out</Link>
                 </div>

@@ -29,6 +29,7 @@ class App extends Component {
 
     /*
      * On page load, check if there is a signed in user
+     * If there is: save user token in state
      */
     componentDidMount() {
         const getUserTokenPromise = getUserToken();

@@ -5,7 +5,7 @@ import {
     Button,
     Col,
 } from 'react-bootstrap';
-import FormField from './FormField';
+import FormField from '../containers/FormComponents/FormField';
 
 class VerificationForm extends Component {
     render() {
