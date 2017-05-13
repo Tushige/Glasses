@@ -13,7 +13,7 @@ export default class Routes extends Component {
     render() {
         return (
             <Switch>
-                <Route path='/' exact component={Homepage} />
+                <Route path='/' exact render={() => <Homepage childProps={this.props.childProps}/>}/>
                 <Route path='/signup' exact render={() => <Signup childProps={this.props.childProps}/>}/>
                 <Route path='/signin' exact render={() => <Signin childProps={this.props.childProps}/>}/>
                 <Route component={Error404} />

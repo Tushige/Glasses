@@ -45,14 +45,15 @@ class App extends Component {
     }
 
     render() {
-        const childProps = {
-            userToken: this.state.userToken,
-            updateUserToken: this.updateUserToken,
-        };
         let isSignedin = true;
         if (this.state.userToken === null || this.state.userToken === undefined) {
             isSignedin = false;
         }
+        const childProps = {
+            isSignedin: isSignedin,
+            userToken: this.state.userToken,
+            updateUserToken: this.updateUserToken,
+        };
         return (
             <div className="App container">
                 <NavigationBar
