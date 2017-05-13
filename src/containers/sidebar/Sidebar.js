@@ -1,5 +1,6 @@
 /*******************************************************************************
- * This file contains the component that describes the app homepage
+ * This file contains the component that describes the sidebar that users see
+ * when they sign in
  *******************************************************************************/
 import React, { Component } from 'react';
 import './sidebar.css';
@@ -12,26 +13,36 @@ import {getSignedInUser} from '../../libs/user';
 
 const defaultStyles = {
     sidebar_closed: {
-        height:'100%',
-        width:'0px',
-        position:'fixed',
-        zIndex:1,
-        top:0,
-        left:0,
-        background:'#111',
-        overflowX:'hidden',
-        transition:'0.5s'
+        sidebar: {
+            height:'100%',
+            width:'0px',
+            position:'fixed',
+            zIndex:1,
+            top:0,
+            left:0,
+            background:'#111',
+            overflowX:'hidden',
+            transition:'0.5s'
+        },
+        sidebarToggler: {
+            left:0,
+        },
     },
     sidebar_open: {
-        height:'100%',
-        width:'250px',
-        position:'fixed',
-        zIndex:1,
-        top:0,
-        left:0,
-        background:'#111',
-        overflowX:'hidden',
-        transition:'0.5s'
+        sidebar: {
+            height:'100%',
+            width:'250px',
+            position:'fixed',
+            zIndex:1,
+            top:0,
+            left:0,
+            background:'#111',
+            overflowX:'hidden',
+            transition:'0.5s'
+        },
+        sidebarToggler: {
+            left: 250,
+        },
     },
 };
 
@@ -42,7 +53,8 @@ class Sidebar extends Component {
         this.signOutHandler = this.signOutHandler.bind(this);
         this.state = {
             isOpen: false,
-            style: defaultStyles.sidebar_closed,
+            sidebar_style: defaultStyles.sidebar_closed.sidebar,
+            sidebarToggler_style: defaultStyles.sidebar_closed.sidebarToggler,
         }
     }
     /*
@@ -56,6 +68,7 @@ class Sidebar extends Component {
         if (cognitoUser) {
             cognitoUser.signOut();
         }
+        // clear the token that we get on sign in
         this.props.updateUserToken(null);
     }
     /*
@@ -65,11 +78,13 @@ class Sidebar extends Component {
         let sidenav = this.refs.sidenav;
         // if open -> close
         if (this.state.isOpen) {
-            this.state.style = defaultStyles.sidebar_closed;
+            this.state.sidebar_style = defaultStyles.sidebar_closed.sidebar;
+            this.state.sidebarToggler_style = defaultStyles.sidebar_closed.sidebarToggler;
         }
         // if closed -> open
         else {
-            this.state.style = defaultStyles.sidebar_open;
+            this.state.sidebar_style = defaultStyles.sidebar_open.sidebar;
+            this.state.sidebarToggler_style = defaultStyles.sidebar_open.sidebarToggler;
         }
         // update the change in the state
         this.setState({
@@ -79,16 +94,17 @@ class Sidebar extends Component {
     render() {
         return (
             <div className="userHomepage">
-                <div ref="sidenav" style={this.state.style}>
+                <div ref="sidenav" style={this.state.sidebar_style}>
                     <h2 id="sidebar-title">Glasses</h2>
                     <Link to='/' className="linkItems">Home</Link>
                     <Link to='/' className="linkItems">Reading</Link>
                     <Link to='/' className="linkItems" onClick={this.signOutHandler}>Sign Out</Link>
                 </div>
-                <Button
+                <Button id="sidebar-toggle-btn"
+                    style={this.state.sidebarToggler_style}
                     onClick={this.sidebarToggleHandler}
                 >
-                {this.state.isOpen?'Close':'Open'}
+                {this.state.isOpen?'X':'☰'}
                 </Button>
             </div>
         )

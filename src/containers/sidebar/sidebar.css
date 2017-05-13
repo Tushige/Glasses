@@ -16,3 +16,7 @@
 .linkItems:hover {
    color:#8131b7;
 }
+#sidebar-toggle-btn {
+    position: absolute;
+    transition: 0.5s;
+}
