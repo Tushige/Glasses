@@ -29,8 +29,10 @@ class ReadingForm extends Component {
             <FormGroup>
                 <Col smOffset={2} sm={10}>
                     <FormControl id="memo-text"
-                        componentClass="textarea"
-                        placeholder="Say something about it"/>
+                        componentClass={this.props.memoProps.inputType}
+                        value={this.props.memoProps.inputValue}
+                        placeholder={this.props.memoProps.placeholder}
+                        onChange={this.props.memoProps.inputHandler}/>
                 </Col>
             </FormGroup>
         );

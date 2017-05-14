@@ -22,7 +22,7 @@ const defaultStyles = {
             zIndex:1,
             top:0,
             left:0,
-            background:'#111',
+            background:'#1b0026',
             overflowX:'hidden',
             transition:'0.5s'
         },
@@ -39,7 +39,7 @@ const defaultStyles = {
             zIndex:1,
             top:0,
             left:0,
-            background:'#111',
+            background:'#1b0026',
             overflowX:'hidden',
             transition:'0.5s'
         },
@@ -87,13 +87,17 @@ class Sidebar extends Component {
         let sidenav = this.refs.sidenav;
         // if open -> close
         if (this.state.isOpen) {
-            this.state.sidebar_style = defaultStyles.sidebar_closed.sidebar;
-            this.state.sidebarToggler_style = defaultStyles.sidebar_closed.sidebarToggler;
+            this.setState({
+                sidebar_style: defaultStyles.sidebar_closed.sidebar,
+                sidebarToggler_style:defaultStyles.sidebar_closed.sidebarToggler,
+            });
         }
         // if closed -> open
         else {
-            this.state.sidebar_style = defaultStyles.sidebar_open.sidebar;
-            this.state.sidebarToggler_style = defaultStyles.sidebar_open.sidebarToggler;
+            this.setState({
+                sidebar_style:defaultStyles.sidebar_open.sidebar,
+                sidebarToggler_style: defaultStyles.sidebar_open.sidebarToggler,
+            });
         }
         // update the change in the state
         this.setState({
