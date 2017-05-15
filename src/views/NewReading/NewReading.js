@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReadingForm from './ReadingForm';
-import {create} from '../../libs/serverAPI';
+import {createReading} from '../../libs/serverAPI';
 import {configureS3} from '../../libs/aws_s3';
 import AWS from 'aws-sdk';
 
@@ -75,7 +75,7 @@ class NewReading extends Component {
             attachment: filePath,
         }
 
-        let dataPromise = create(newReading, this.props.childProps.userToken);
+        let dataPromise = createReading(newReading, this.props.childProps.userToken);
         // response.json() resolves
         dataPromise.then((jsonData) => {
             console.log(jsonData)
@@ -130,7 +130,6 @@ class NewReading extends Component {
             placeholder: "e.g. www.example.com",
             inputHandler: this.linkOnChangeHandler,
         }
-        const fname = this.state.attachment ? this.state.attachment.name:"";
         const fileProps = {
             inputHandler: this.fileAttachmentHandler,
         }

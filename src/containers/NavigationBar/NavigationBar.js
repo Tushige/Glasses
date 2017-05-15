@@ -5,8 +5,6 @@
 import React, { Component } from 'react';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import Routes from './../../Routes';
-import {getSignedInUser} from '../../libs/user';
 
 class NavigationBar extends Component {
     render() {

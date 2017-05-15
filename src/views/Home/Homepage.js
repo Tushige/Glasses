@@ -3,12 +3,7 @@
  *******************************************************************************/
 import React, { Component } from 'react';
 import './Homepage.css';
-import { Link } from 'react-router-dom';
-import {Nav,
-        Navbar,
-        Button,
-        NavItem } from 'react-bootstrap';
-        
+
 class Homepage extends Component {
     render() {
         return (

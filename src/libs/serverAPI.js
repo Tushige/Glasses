@@ -5,10 +5,11 @@ import config from '../config.js';
 
 /*
  * Writes to DB
- * returns a promise
+ * returns a promise, where resolve value is the created reading object
  */
-function create(reading, userToken) {
-    const url = config.APIGateway.URL+"/readings";
+function createReading(reading, userToken) {
+    const endpoint = '/readings';
+    const url = config.APIGateway.URL+endpoint;
     reading = JSON.stringify(reading);
     console.log("creating the following:");
     console.log(reading);
@@ -32,5 +33,32 @@ function create(reading, userToken) {
         return Promise.reject(err);
     });
 }
-
-export {create};
+/*
+ * retrieves all readings for the user
+ * returns a promise, where resolve value is the reading object
+ */
+function getAllReadings(userToken) {
+    console.log("making an API call");
+    const endpoint = '/readings';
+    const url = config.APIGateway.URL+endpoint;
+    let myInit = {
+        method: 'GET',
+        headers: {
+            "Authorization": userToken,
+        },
+    };
+    let getAllPromise = fetch(url, myInit);
+    return getAllPromise.then((response) => {
+        if (response.status === 200) {
+            // returns a promise
+            return response.json();
+        } else {
+            return Promise.reject(new Error("reading list retrieval failed"));
+        }
+    })
+    .catch((err) => {
+        return Promise.reject(err);
+    });
+}
+export {createReading,
+        getAllReadings};

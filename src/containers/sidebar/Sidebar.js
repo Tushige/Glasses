@@ -7,11 +7,9 @@ import './sidebar.css';
 import {Link,
         withRouter,
 } from 'react-router-dom';
-import {Nav,
-        Navbar,
-        Button,
-        NavItem } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import {getSignedInUser} from '../../libs/user';
+import AWS from 'aws-sdk';
 
 const defaultStyles = {
     sidebar_closed: {
@@ -74,6 +72,9 @@ class Sidebar extends Component {
         if (cognitoUser) {
             cognitoUser.signOut();
         }
+        if (AWS.config.credentials) {
+            AWS.config.credentials.clearCacheId();
+        }
         // clear the token that we get on sign in
         this.props.updateUserToken(null);
         // redirect to homepage
@@ -84,7 +85,6 @@ class Sidebar extends Component {
      * shows/hides the sidebar
      */
     sidebarToggleHandler() {
-        let sidenav = this.refs.sidenav;
         // if open -> close
         if (this.state.isOpen) {
             this.setState({
@@ -111,7 +111,7 @@ class Sidebar extends Component {
                     <h2 id="sidebar-title">Glasses</h2>
                     <Link to='/' className="linkItems">Home</Link>
                     <Link to='/newreading' className="linkItems">Add a reading</Link>
-                    <Link to='/' className="linkItems">Reading</Link>
+                    <Link to='/readings' className="linkItems">Readings</Link>
                     <Link to='/' className="linkItems" onClick={this.signOutHandler}>Sign Out</Link>
                 </div>
                 <Button id="sidebar-toggle-btn"

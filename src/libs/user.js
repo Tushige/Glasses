@@ -54,22 +54,25 @@ function getSignedInUser() {
 
 /*
  * Used in page loads to get currently signed in user's token
+ * returns a promise that resolves with
+ *  1. user token if signed in user present
+ *  2. null if no signed in user
  */
 function getUserToken() {
     const cognitoUser = getSignedInUser();
     return new Promise((resolve, reject) => {
         if (cognitoUser===null) {
-            reject(null)
+            resolve(null);
         }
         cognitoUser.getSession((err, session) => {
             if(err) {
-                reject("no signed in user");
+                reject(new Error("no signed in user"));
             } else {
                 const token = session.getIdToken().jwtToken;
                 if (token) {
                     resolve(token)
                 }
-                reject("no signed in user");
+                resolve(null);
             }
         });
     });

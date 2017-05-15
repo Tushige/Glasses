@@ -17,7 +17,7 @@ import {
  */
 import {withRouter} from 'react-router-dom';
 
-import {createCognitoUser, createUserAuthDetails, authenticateUser} from '../../libs/user';
+import {authenticateUser} from '../../libs/user';
 
 class Signin extends Component {
     constructor(props) {
