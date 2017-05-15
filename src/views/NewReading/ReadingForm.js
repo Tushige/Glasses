@@ -8,6 +8,7 @@ import  {
 } from 'react-bootstrap';
 import FormField from '../../containers/FormComponents/FormField';
 import './NewReading.css';
+
 class ReadingForm extends Component {
     render() {
         let isLoading = this.props.isLoading;
@@ -39,7 +40,14 @@ class ReadingForm extends Component {
 
         // 4. file attachment form field
         const fileAttachment = (
-            <FormField childProps={this.props.fileProps}/>
+            <FormGroup>
+                <Col smOffset={2} sm={10}>
+                    <FormControl
+                        type="file"
+                        onChange={this.props.fileProps.inputHandler}
+                    />
+                </Col>
+            </FormGroup>
         )
 
         // 5. submit button to save reading

@@ -1,3 +1,6 @@
+/*
+ * CRUD functions that interface with the Glasses API
+ */
 import config from '../config.js';
 
 /*
@@ -7,6 +10,8 @@ import config from '../config.js';
 function create(reading, userToken) {
     const url = config.APIGateway.URL+"/readings";
     reading = JSON.stringify(reading);
+    console.log("creating the following:");
+    console.log(reading);
     let myInit = {
         method: 'POST',
         headers: {
