@@ -1,16 +1,4 @@
 #reading-container {
     background: gray;
-}
-
-#title {
-    float:left;
-}
-#link {
-    float:left;
-}
-#memo {
-    float:left;
-}
-#attachment {
-    float: left;
+    text-align: left;
 }

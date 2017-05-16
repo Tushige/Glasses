@@ -1,0 +1,28 @@
+.title-container {
+    width:100%;
+    line-height: 30px;
+    font-size: 18px;
+    margin-top: 10px;
+    maring-bottom: 10px;
+    border-radius: 15px;
+}
+
+.title {
+    color:white;
+}
+
+.title a {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.title a:hover {
+    color: #7c92b2;
+}
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}

@@ -16,11 +16,11 @@ const defaultStyles = {
         sidebar: {
             height:'100%',
             width:'0px',
-            position:'fixed',
+            position:'absolute',
             zIndex:1,
             top:0,
             left:0,
-            background:'#1b0026',
+            background:'#08101c',
             overflowX:'hidden',
             transition:'0.5s'
         },
@@ -33,11 +33,11 @@ const defaultStyles = {
         sidebar: {
             height:'100%',
             width:'250px',
-            position:'fixed',
+            position:'absolute',
             zIndex:1,
             top:0,
             left:0,
-            background:'#1b0026',
+            background:'#08101c',
             overflowX:'hidden',
             transition:'0.5s'
         },
@@ -104,21 +104,49 @@ class Sidebar extends Component {
             isOpen: ~this.state.isOpen,
         });
     }
+
     render() {
+        const btnOpen = (
+            <i className="fa fa-bars" aria-hidden="true"></i>
+        )
+        const btnClose = (
+            <i className="fa fa-bars fa-rotate-90" aria-hidden="true"></i>
+        )
+        let navBtn = btnOpen;
+        if (this.state.isOpen) {
+            navBtn = btnClose;
+        }
         return (
             <div className="userHomepage">
                 <div ref="sidenav" style={this.state.sidebar_style}>
                     <h2 id="sidebar-title">Glasses</h2>
-                    <Link to='/' className="linkItems">Home</Link>
-                    <Link to='/newreading' className="linkItems">Add a reading</Link>
-                    <Link to='/readings' className="linkItems">Readings</Link>
-                    <Link to='/' className="linkItems" onClick={this.signOutHandler}>Sign Out</Link>
+                    <hr/>
+
+                    <Link to='/' className="linkItems">
+                        <i className="fa fa-home" aria-hidden="true"></i>
+                        Home
+                    </Link>
+
+                    <Link to='/newreading' className="linkItems">
+                        <i className="fa fa-plus-square" aria-hidden="true"></i>
+                        Add a reading
+                    </Link>
+
+                    <Link to='/readings' className="linkItems">
+                        <i className="fa fa-book" aria-hidden="true"></i>
+                        Readings
+                    </Link>
+
+                    <Link to='/' className="linkItems" onClick={this.signOutHandler}>
+                        <i className="fa fa-power-off" aria-hidden="true"></i>
+                        Sign Out
+                    </Link>
                 </div>
                 <Button id="sidebar-toggle-btn"
                     style={this.state.sidebarToggler_style}
                     onClick={this.sidebarToggleHandler}
                 >
-                {this.state.isOpen?'X':'☰'}
+                {navBtn}
                 </Button>
             </div>
         )

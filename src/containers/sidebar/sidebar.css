@@ -3,18 +3,30 @@
     font-size: 30px;
 }
 .linkItems {
-   color:white;
-   padding: 10px;
-   font-size:18px;
-   display:block;
-   transition: 0.3s;
-}
-.linkItems:link {
-   text-decoration: none;
-   text-decoration-line: none;
+    color:white;
+    padding: 10px;
+    font-size:18px;
+    display:block;
+    transition: 0.3s;
+    text-align: left;
 }
 .linkItems:hover {
-   color:#8131b7;
+    background-color: #3163af;
+    color:white;
+    transition: 0.3s;
+}
+/*unvisited links*/
+.linkItems:link {
+    cursor: pointer;
+    text-decoration: none;
+    text-decoration-line: none;
+    color:white;
+}
+/* currently selected link*/
+.linkItems:active  {
+    font-size: 26px;
+    background-color: #3163af;
+    color:red;
 }
 #sidebar-toggle-btn {
     position: absolute;
