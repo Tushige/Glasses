@@ -33,6 +33,7 @@ function createReading(reading, userToken) {
         return Promise.reject(err);
     });
 }
+
 /*
  * retrieves all readings for the user
  * returns a promise, where resolve value is the reading object
@@ -60,5 +61,33 @@ function getAllReadings(userToken) {
         return Promise.reject(err);
     });
 }
+
+/*
+ * retrieves a reading for the user
+ * returns a promise, where resolve value is the reading object
+ */
+function getReading(userToken, readingId) {
+    const endpoint = '/reading/'+readingId;
+    const url = config.APIGateway.URL+endpoint;
+    let myInit = {
+        method: 'GET',
+        headers: {
+            "Authorization": userToken,
+        },
+    };
+    let getPromise = fetch(url, myInit);
+    return getPromise.then((response) => {
+        if (response.status === 200) {
+            // returns a promise
+            return response.json();
+        } else {
+            return Promise.reject(new Error("reading retrieval failed"));
+        }
+    })
+    .catch((err) => {
+        return Promise.reject(err);
+    });
+}
 export {createReading,
+        getReading,
         getAllReadings};

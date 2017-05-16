@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import {getAllReadings} from '../../libs/serverAPI';
+import ReadingItem from './ReadingItem';
 
+import {Grid,
+
+} from 'react-bootstrap';
 class Readings extends Component {
     constructor(props) {
         super(props);
@@ -29,11 +33,13 @@ class Readings extends Component {
         let readingItems = null;
         if (readings) {
             readingItems = readings.map((reading) => {
-                return <li key={reading.readingId}>{reading.title}</li>
+                return <ReadingItem item={reading}/>
             });
         }
         return (
-            <h1>{readingItems}</h1>
+            <Grid>
+                {readingItems}
+            </Grid>
         );
     }
 }

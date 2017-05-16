@@ -10,6 +10,7 @@ import Signin from './views/Signin/Signin';
 import NewReading from './views/NewReading/NewReading';
 import Error404 from './views/errors/Error404';
 import Readings from './views/Readings/Readings';
+import Reading from './views/Readings/Reading';
 
 export default class Routes extends Component {
     render() {
@@ -20,6 +21,7 @@ export default class Routes extends Component {
                 <Route path='/signin' exact render={() => <Signin childProps={this.props.childProps}/>}/>
                 <Route path='/newreading' exact render={() => <NewReading childProps={this.props.childProps}/>}/>
                 <Route path='/readings' exact render={() => <Readings childProps={this.props.childProps}/>}/>
+                <Route path='/reading/:id' exact render={() => <Reading childProps={this.props.childProps}/>}/>
                 <Route component={Error404} />
             </Switch>
         )
