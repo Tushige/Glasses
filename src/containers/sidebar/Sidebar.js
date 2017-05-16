@@ -107,10 +107,18 @@ class Sidebar extends Component {
 
     render() {
         const btnOpen = (
-            <i className="fa fa-bars" aria-hidden="true"></i>
+            <i className="fa fa-bars fa-3x"
+               aria-hidden="true"
+               id="btnOpen"
+               style={this.state.sidebarToggler_style}
+               onClick={this.sidebarToggleHandler}></i>
         )
         const btnClose = (
-            <i className="fa fa-bars fa-rotate-90" aria-hidden="true"></i>
+            <i className="fa fa-bars fa-rotate-90 fa-3x"
+               aria-hidden="true"
+               id="btnClose"
+               style={this.state.sidebarToggler_style}
+               onClick={this.sidebarToggleHandler}></i>
         )
         let navBtn = btnOpen;
         if (this.state.isOpen) {
@@ -142,12 +150,7 @@ class Sidebar extends Component {
                         Sign Out
                     </Link>
                 </div>
-                <Button id="sidebar-toggle-btn"
-                    style={this.state.sidebarToggler_style}
-                    onClick={this.sidebarToggleHandler}
-                >
                 {navBtn}
-                </Button>
             </div>
         )
     }

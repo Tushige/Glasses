@@ -28,8 +28,25 @@
     background-color: #3163af;
     color:red;
 }
-#sidebar-toggle-btn {
+
+/*
+ * open / close button
+ */
+#btnOpen, #btnClose {
     position: absolute;
     zIndex:2;
     transition: 0.5s;
+    cursor:pointer;
+}
+/*
+ * when sidebar is opened, button is placed 250px away from left
+ */
+#btnOpen {
+    left: 250;
+}
+/*
+ * when sidebar is closed, button is placed 0px away from left
+ */
+#btnClose {
+    left:0;
 }

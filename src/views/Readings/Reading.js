@@ -6,6 +6,7 @@ import {withRouter} from 'react-router-dom';
 import {getReading} from '../../libs/serverAPI';
 import {Grid,
         Row,
+        Button
 } from 'react-bootstrap';
 import './reading.css';
 
