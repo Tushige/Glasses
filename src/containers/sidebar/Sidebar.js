@@ -14,9 +14,9 @@ import AWS from 'aws-sdk';
 const defaultStyles = {
     sidebar_closed: {
         sidebar: {
+            position:'fixed',
             height:'100%',
             width:'0px',
-            position:'absolute',
             zIndex:1,
             top:0,
             left:0,
@@ -31,9 +31,9 @@ const defaultStyles = {
     },
     sidebar_open: {
         sidebar: {
+            position:'fixed',
             height:'100%',
             width:'250px',
-            position:'absolute',
             zIndex:1,
             top:0,
             left:0,
@@ -126,7 +126,7 @@ class Sidebar extends Component {
         }
         return (
             <div className="userHomepage">
-                <div ref="sidenav" style={this.state.sidebar_style}>
+                <div id="sidebar" ref="sidenav" style={this.state.sidebar_style}>
                     <h2 id="sidebar-title">Glasses</h2>
                     <hr/>
 

@@ -52,6 +52,12 @@ class Reading extends Component {
                     <Row>
                         <h1 id="attachment">attachment: {reading.attachment ? reading.attachment:"no attachment"}</h1>
                     </Row>
+                    <Button>
+                        Edit
+                    </Button>
+                    <Button>
+                        Delete
+                    </Button>
                 </Grid>
             </div>
         );
