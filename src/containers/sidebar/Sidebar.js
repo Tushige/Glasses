@@ -132,22 +132,22 @@ class Sidebar extends Component {
 
                     <Link to='/' className="linkItems">
                         <i className="fa fa-home" aria-hidden="true"></i>
-                        Home
+                        <span>Home</span>
                     </Link>
 
                     <Link to='/newreading' className="linkItems">
                         <i className="fa fa-plus-square" aria-hidden="true"></i>
-                        Add a reading
+                        <span>Add a reading</span>
                     </Link>
 
                     <Link to='/readings' className="linkItems">
                         <i className="fa fa-book" aria-hidden="true"></i>
-                        Readings
+                        <span>Readings</span>
                     </Link>
 
                     <Link to='/' className="linkItems" onClick={this.signOutHandler}>
                         <i className="fa fa-power-off" aria-hidden="true"></i>
-                        Sign Out
+                        <span>Sign Out</span>
                     </Link>
                 </div>
                 {navBtn}

@@ -3,10 +3,14 @@
     top:0;
     height:100%;
 }
+/* i.e. Glasses*/
 #sidebar-title {
     color:white;
     font-size: 30px;
 }
+/*
+ * <Link> tag
+ */
 .linkItems {
     color:white;
     padding: 10px;
@@ -32,16 +36,22 @@
     font-size: 26px;
     background-color: #3163af;
 }
-
+.linkItems span {
+    margin-left: 15px;
+}
 /*
  * open / close button
  */
 #btnOpen, #btnClose {
     position: fixed;
+    color:#08101c;
     top:0;
     zIndex:2;
     transition: 0.5s;
     cursor:pointer;
+}
+#btnOpen:hover, #btnClose:hover {
+    color:#3163af;
 }
 /*
  * when sidebar is opened, button is placed 250px away from left

@@ -191,7 +191,9 @@ class Reading extends Component {
         const reading = this.state.reading? this.state.reading : null;
         // getting reading object is async process: wait rendering until it's done
         if (!reading) {
-            return null;
+            return (
+                <i id="page-loading-bar" className="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+            )
         }
         // show reading object in reading format if not Editing
         if (!this.state.isEditing) {

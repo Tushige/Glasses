@@ -5,6 +5,7 @@ import ReadingItem from './ReadingItem';
 import {Grid,
 
 } from 'react-bootstrap';
+import './Readings.css';
 class Readings extends Component {
     constructor(props) {
         super(props);
@@ -31,15 +32,28 @@ class Readings extends Component {
     render() {
         let readings = this.state.readings;
         let readingItems = null;
+        /* while readingItems is not available, display loading bar*/
+        let view = (
+                <i id="page-loading-bar" className="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+        );
+        /*create a list of <ReadingItem>*/
         if (readings) {
             readingItems = readings.map((reading) => {
                 return <ReadingItem key={reading.readingId} item={reading}/>
             });
         }
+        /*display readingItems if it's available*/
+        if (readingItems) {
+            view = (
+                <Grid id="grid">
+                    {readingItems}
+                </Grid>
+            )
+        }
         return (
-            <Grid id="grid">
-                {readingItems}
-            </Grid>
+            <div>
+                {view}
+            </div>
         );
     }
 }
