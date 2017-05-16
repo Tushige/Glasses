@@ -156,7 +156,8 @@ class Signin extends Component {
                                 bsStyle="primary"
                                 block
                                 disabled={!this.validateForm() || isLoading}>
-                                {isLoading ? 'Signing in...':'Sign In'}
+                                {isLoading && <i className="fa fa-circle-o-notch fa-spin fa-fw"></i>}
+                                {isLoading?'Signing In':'Sign In'}
                             </Button>
                         </Col>
                     </FormGroup>

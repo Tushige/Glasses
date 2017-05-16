@@ -21,6 +21,7 @@ class SignupForm extends Component {
                             bsStyle="primary"
                             block
                             disabled={isLoading}>
+                            {isLoading && <i className="fa fa-circle-o-notch fa-spin fa-fw"></i>}
                             {isLoading ? 'Signing up...':'Sign Up'}
                         </Button>
                     </Col>

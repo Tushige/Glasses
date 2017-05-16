@@ -1,6 +1,7 @@
 /*
  * This file contains a component that describes how a single Form field looks like
  * Used By Forms
+ *----------------------------
  * expects the following in its props.childProps
  *  1. textLabel
  *  2. inputType

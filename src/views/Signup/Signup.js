@@ -154,19 +154,11 @@ class Signup extends Component {
      * confirm user through Cognito API
      */
     confirmWithCognito() {
-        console.log("-------------------------");
-        console.log("inside confirmWithCognito")
-        console.log("CognitoUser: " + this.state.cognitoUser);
-
         return new Promise((resolve, reject) => {
             this.state.cognitoUser.confirmRegistration(this.state.verificationCode, true, function(err, result) {
                 if (err) {
-                    console.log("confirm promise rejecting");
-                    console.log("-------------------------");
                     reject(err);
                 }
-                console.log("confirm promise resolving");
-                console.log("-------------------------");
                 resolve(result);
             });
         });

@@ -33,7 +33,7 @@ class Readings extends Component {
         let readingItems = null;
         if (readings) {
             readingItems = readings.map((reading) => {
-                return <ReadingItem item={reading}/>
+                return <ReadingItem key={reading.readingId} item={reading}/>
             });
         }
         return (

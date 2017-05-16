@@ -62,12 +62,8 @@ class NewReading extends Component {
         var filePath = null;
         // upload the file to s3 first if there is a file
         if (this.state.attachment) {
-            console.log("1. retrieving filepath");
             filePath = await this.uploadFile();
-            console.log("3. retrieved filePath: ");
-            console.log(filePath);
         }
-        console.log("4. constructing Reading object");
         let newReading = {
             title: this.state.readingTitle,
             link: this.state.readingLink,
@@ -78,7 +74,6 @@ class NewReading extends Component {
         let dataPromise = createReading(newReading, this.props.childProps.userToken);
         // response.json() resolves
         dataPromise.then((jsonData) => {
-            console.log(jsonData)
             this.setState({
                 isLoading: false,
             })
@@ -97,18 +92,15 @@ class NewReading extends Component {
                 const params = {
                     Key: filePath,
                     ACL: 'public-read',
-                    Body: this.state.attachment,
+                    Body: file,
                     ContentType: file.type,
                     ContentLength: file.size,
                 };
                 let s3promise = s3.upload(params).promise();
                 s3promise.then((data) => {
-                    console.log("2. got s3 filepath:");
-                    console.log(data);
                     resolve(data.Location);
                 })
                 .catch((err) => {
-                    console.log("DID NOT get s3 filepath:");
                     reject(err);
                 });
             });

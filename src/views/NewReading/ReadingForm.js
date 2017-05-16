@@ -9,6 +9,16 @@ import  {
 import FormField from '../../containers/FormComponents/FormField';
 import './NewReading.css';
 
+/*
+ * A form used to submit a Reading Entry
+ * Expects the following props:
+ *  1. isLoading
+ *  2. titleProps
+ *  3. linkProps
+ *  4. memoProps
+ *  5. fileProps
+ *  6. submitHandler
+ */
 class ReadingForm extends Component {
     render() {
         let isLoading = this.props.isLoading;
@@ -59,6 +69,7 @@ class ReadingForm extends Component {
                         bsStyle="primary"
                         block
                         disabled={isLoading}>
+                        {isLoading && <i className="fa fa-circle-o-notch fa-spin fa-fw"></i>}
                         {isLoading ? 'Saving...':'Save'}
                     </Button>
                 </Col>
