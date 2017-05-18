@@ -13,8 +13,10 @@
 /* vertically center the brand title*/
 #brand-title {
     font-size: 32px;
+    font-weight: bolder;
     line-height: 64px;
     white-space: nowrap;
+    color: #08101c;
 }
 .navbar-collapse ul li {
     min-height: 100px;
@@ -23,5 +25,14 @@
 .navitem a{
     font-size: 24px;
     top: 24px;
-    white-space: nowrap;
+    line-height: 48px;
+    transition: 0.3s;
+}
+/*by default, the anchor element's background is gray, remove it*/
+.navbar-collapse ul li.navitem.active a{
+    background: none !important;
+}
+/*add bottom border when navigation item is clicked*/
+.navbar-collapse ul li.navitem.active{
+    border-bottom: 5px solid #08101c;
 }
