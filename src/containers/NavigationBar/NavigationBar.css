@@ -1,0 +1,39 @@
+/*
+ * change navigation bar height
+ */
+.navbar {
+    min-height:80px;
+}
+/*
+ * removes the bottom margin
+ * there was an unnecessary space at the bottom of the
+ * navigation
+ */
+.navbar-default {
+    margin: 0 !important;
+}
+/*
+ * i.e. Glasses
+ */
+#brand-title {
+    color:#383838;
+    font-size: 32px;
+    font-weight: bold;
+}
+/*
+* vertically center the brand title
+* value determine from
+*  1. navbar height
+*  2. brand text height
+*/
+.navbar-brand {
+    line-height: 48px;
+}
+
+/*
+ * set min-height to be equal to navbar height
+ */
+a {
+    font-size: 18px;
+    font-weight: bold;
+}

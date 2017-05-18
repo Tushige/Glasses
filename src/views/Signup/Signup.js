@@ -1,5 +1,7 @@
 /*******************************************************************************
- * This file contains the component and logic of user signup
+ *  @file Signup.js
+ *
+ *  Contains the component and logic of user signup
  *
  * Flow of User signUp:
  *  1.
@@ -14,22 +16,28 @@ import {createUserPool,
 } from '../../libs/user';
 import SignupForm from './SignupForm';
 import VerificationForm from './VerificationForm';
-/*
- * withRouter gives us history info in our Signup component's props
- */
-import {withRouter} from 'react-router-dom';
+import {withRouter,
+} from 'react-router-dom';
+import './Signup.css';
 
 class Signup extends Component {
     constructor(props) {
         super(props);
-
+        /*input handler methods*/
         this.emailHandler = this.emailHandler.bind(this);
         this.passwordHandler = this.passwordHandler.bind(this);
         this.vpasswordHandler = this.vpasswordHandler.bind(this);
         this.verificationHandler = this.verificationHandler.bind(this);
         this.signupHandler = this.signupHandler.bind(this);
         this.verifySubmitHandler = this.verifySubmitHandler.bind(this);
+        /*registration methods*/
         this.confirmWithCognito = this.confirmWithCognito.bind(this);
+
+        /*validation methods*/
+        this.validateEmail = this.validateEmail.bind(this);
+        this.validatePassword =this.validatePassword.bind(this);
+        this.validateVPassword = this.validateVPassword.bind(this);
+        this.validateForm = this.validateForm.bind(this);
 
         this.state = {
             email: '',
@@ -40,11 +48,13 @@ class Signup extends Component {
             cognitoUser: null,
             isVerified: false,
             isSignedUp: false,
+
+            showError: false,
         };
     }
 
     /*
-     * Update functions to reflect user input
+     * Update methods to reflect user input
      */
     emailHandler(event) {
         this.setState({
@@ -66,16 +76,66 @@ class Signup extends Component {
             verificationCode: event.target.value,
         });
     }
-
     /*
-     * Called when user hits Submit buttons
-     * This creates a new CognitoUser object
+     * check if email is valid
+     */
+    validateEmail() {
+        const len = this.state.email.length;
+        if (len>8) return "success";
+        else if(len>3) return "warning";
+        else if(len>0) return "error";
+    }
+    /*
+     * check if password is valid
+     */
+    validatePassword() {
+        const len = this.state.password.length;
+        if (len>8) return "success";
+        else if(len>3) return "warning";
+        else if(len>0) return "error";
+    }
+    /*
+     * check if verify password is valid
+     */
+    validateVPassword() {
+        if (this.state.password && this.state.vpassword === this.state.password)
+            return 'success';
+        else if(this.state.vpassword)
+            return "error";
+    }
+    /*
+     * User input validation methods
+     */
+     /*validatePassword() {
+         if (this.state.password===this.state.vpassword) {
+             return 'success';
+         } else {
+             return 'error';
+         }
+     }*/
+     validateForm() {
+        const email = this.validateEmail();
+        const pass = this.validatePassword();
+        const vpass = this.validateVPassword();
+        if (email === 'success' && pass==='success' && vpass==='success') {
+            return 'success';
+        }
+        else {
+            return 'error';
+        }
+     }
+    /**
+     *  Signup submit button handler
+     *  This creates a new CognitoUser object
+     *  @return none
      */
      signupHandler(event) {
-         // we don't want to reload the page while waiting for async request
-         event.preventDefault();
-         // give user visual feedback while waiting
-         this.setState({
+         event.preventDefault();    // prevents page reload while waiting for async request
+         if (this.validateForm() !=='success') {
+             alert("input fields are wrong")
+             return;
+         }
+         this.setState({         // displays visual feedback while waiting
              isLoading: true,
          });
 
@@ -96,62 +156,72 @@ class Signup extends Component {
              });
          })
          .catch((err)=>{
-             // we need to display informative error message on failure
+             // we need to display informative error message on signup failure
+             // instead of just alert
+             this.setState({
+                 cognitoUser: null,
+                 isLoading: false,
+                 isSignedUp: false,
+                 showError: true,
+             })
              alert(err);
          });
      }
-     /*
-      * signup user with Cognito API
+     /**
+      * @param userPool {CognitoUserPool}
+      * @param username {String} - user email
+      * @param password {String} - user password
+      * @param attributeList {CognitoUserAttribute}
+      * @return {Promise} - resolves with CongitoUser object of new signed up user
+      *                   - rejects with error message
       */
      signupWithCognito(userPool, username, password, attributeList) {
          return new Promise((resolve, reject) => {
              userPool.signUp(username, password, attributeList, null, function(err, res) {
                  if (err) {
-                     // we need to display informative error message on failure
-                     console.log("signup rejecting with error: " + err);
-                     reject(err);
-                     return;
+                     return reject(err);
                  }
-                 resolve(res.user);
+                 return resolve(res.user);
              });
          });
      }
+     /**
+      * Invoked on user verification code submit
+      * Verifies user's code with AWS
+      * On success, user is signed up, and signed in
+      * On failure, we show error message
+      *             we should do more error handling, such as resending code
+      */
      verifySubmitHandler(event) {
          event.preventDefault();
          this.setState({
              isLoading: true,
          });
          let confirmPromise = this.confirmWithCognito();
-         // confirmation success! - sign in user
-         confirmPromise.then((res) => {
-             console.log("confirmation success!");
+         confirmPromise.then((res) => { // confirmation success! - sign in user
              return authenticateUser(this.state.cognitoUser, this.state.email, this.state.password);
          })
-         // confirmation failed!
-         .catch((err) => {
-             console.log("confirmation failed with error: " + err);
-             return Promise.reject(new Error("confirmation failed"));
+         .catch((err) => {  // confirmation failed!
+             return Promise.reject(err);
          })
-         // authentication success!
-         .then((userToken) => {
-             console.log("authentication success!");
-             // save the new user token in app
-             this.props.childProps.updateUserToken(userToken);
-             // redirect to homepage
-             this.props.history.push('/')
+         .then((userToken) => { // authentication success!
+             this.props.childProps.updateUserToken(userToken);  // save the new user token in app
+             this.props.history.push('/');   // redirect to homepage
              this.setState({
                  isLoading: false,
                  isVerified: true
-             })
+             });
          })
          // authentication failed!
          .catch((err) => {
-            console.log("auth failed with error: " + err);
+            alert(err);
          });
     }
 
-    /*
-     * confirm user through Cognito API
+    /**
+     *  confirm user through Cognito API - used in email verification step
+     *  @return {Promise} - resolves with confirmation result (not used)
+     *                    - rejects with error
      */
     confirmWithCognito() {
         return new Promise((resolve, reject) => {
@@ -188,33 +258,32 @@ class Signup extends Component {
                     isLoading={isLoading}
                 />
             );
-        } else {
+        } else {    // show signup form
             const emailProps = {
-                textLabel: "Email",
-                inputType: "email",
                 inputValue: this.state.email,
-                placeholder: "please enter your email",
                 inputHandler: this.emailHandler,
-            }
+                validationState: this.validateEmail,
+            };
             const passProps = {
-                textLabel: "Password",
-                inputType: "password",
                 inputValue: this.state.password,
-                placeholder: "please enter your password",
                 inputHandler: this.passwordHandler,
-            }
+                validationState: this.validatePassword,
+            };
             const vpassProps = {
-                textLabel: "Verify Password",
-                inputType: "password",
                 inputValue: this.state.vpassword,
-                placeholder: "verify your password",
                 inputHandler: this.vpasswordHandler,
-            }
+                validationState: this.validateVPassword,
+            };
+            const submitProps = {
+                validationState: this.validateForm,
+            };
             userForm = (
                 <SignupForm signupHandler={this.signupHandler}
+                    showError={this.state.showError}
                     emailProps={emailProps}
                     passProps={passProps}
                     vpassProps={vpassProps}
+                    submitProps={submitProps}
                     isLoading={isLoading}
                 />
             );

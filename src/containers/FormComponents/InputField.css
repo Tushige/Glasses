@@ -1,0 +1,15 @@
+.inputField-container {
+    position: relative;
+}
+.input-field {
+    font-size:24px;
+    height: 50px;
+}
+span {
+    position: relative;
+}
+
+/* error message shown on invalid input */
+.error-msg {
+    color:red !important;
+}

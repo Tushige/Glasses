@@ -1,5 +1,6 @@
 /*******************************************************************************
- * This file contains functions that interact with a user
+ *  @file user.js
+ *  Contains functions that interact with a user object via Amazon AWS
  ******************************************************************************/
 import config from '../config.js';
 import {
@@ -9,8 +10,8 @@ import {
     CognitoUserAttribute,
 } from 'amazon-cognito-identity-js';
 
-/*
- * returns a new CognitoUserPool object used for user auth
+/**
+ *  @return {CognitoUserPool} - a new CognitoUserPool object used for user auth
  */
 function createUserPool() {
      const userPool = new CognitoUserPool({
@@ -20,8 +21,13 @@ function createUserPool() {
      return userPool;
 }
 
-/*
- * Returns a new CognitoUser object
+/**
+ *  @function - creates new CognitoUser object
+ *            - CognitoUser object is created with a
+ *              userPool in which that user is defined,
+ *              and username
+ *  @param username {String} - email address of user
+ *  @return {CognitoUser} a new CognitoUser object
  */
 function createCognitoUser(username) {
     const userPool = createUserPool();
@@ -31,9 +37,13 @@ function createCognitoUser(username) {
     });
 }
 
-/*
- * Returns a new AuthenticationDetails object that is used to authenticate
- * user with AWS Cognito
+/**
+ *  @function - helper function to create user auth object to be used with AWS
+ *  @param username {String} - user email
+ *  @param password {String} - user password
+ *  @return {AuthenticationDetails}
+ *              that is used to authenticate
+ *              user with AWS Cognito
  */
 function createUserAuthDetails(username, password) {
     const userCredentials = {
@@ -43,8 +53,9 @@ function createUserAuthDetails(username, password) {
     return new AuthenticationDetails(userCredentials);
 }
 
-/*
- * {CognitoUser} @return: the current signed in user
+/**
+ *  @return {CognitoUser}:  the current signed in user or
+ *                          null if no user found
  */
 function getSignedInUser() {
     const userPool = createUserPool();
@@ -52,11 +63,13 @@ function getSignedInUser() {
     return cognitoUser;
 }
 
-/*
+/**
  * Used in page loads to get currently signed in user's token
- * returns a promise that resolves with
- *  1. user token if signed in user present
- *  2. null if no signed in user
+ * @return {Promise}
+ *          Promise can resolve in 2 ways:
+ *              1. user token if signed in user present
+ *              2. null if there is no signed in user
+ *          Promise rejects if session retrieval failed
  */
 function getUserToken() {
     const cognitoUser = getSignedInUser();
@@ -66,7 +79,7 @@ function getUserToken() {
         }
         cognitoUser.getSession((err, session) => {
             if(err) {
-                reject(new Error("no signed in user"));
+                reject(err);
             } else {
                 const token = session.getIdToken().jwtToken;
                 if (token) {
@@ -77,9 +90,11 @@ function getUserToken() {
         });
     });
 }
-/*
- * returns a new CognitoUserAttribute object with the given name:value pair
- * used in Sign up
+/**
+ * @function - helper function to create a
+ *             new CognitoUserAttribute object with the given name:value
+ *             pair
+ *           - used in Sign up
  */
 function createCognitoUserAttribute(name, value) {
     const data = {
@@ -88,9 +103,13 @@ function createCognitoUserAttribute(name, value) {
     }
     return new CognitoUserAttribute(data);
 }
-/*
+/**
  * helper function to authenticate a user given credentials
- * resolve returns the user Token
+ *  @param user {CognitoUser} - signed in user
+ *  @param username {String} - user email
+ *  @param password {String} - user password
+ *  @return {Promise} - resolve returns userToken
+ *                    - reject returns error message
  */
 function authenticateUser(user=undefined, username, password) {
     if (user===undefined) {

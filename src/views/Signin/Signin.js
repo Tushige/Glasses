@@ -11,7 +11,7 @@ import {
     Checkbox,
     Col,
 } from 'react-bootstrap';
-
+import SigninForm from './SigninForm';
 /*
  * withRouter gives us history info in our Signin component's props
  */
@@ -22,13 +22,20 @@ import {authenticateUser} from '../../libs/user';
 class Signin extends Component {
     constructor(props) {
         super(props);
+
         this.handleUsername = this.handleUsername.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.signinHandler = this.signinHandler.bind(this);
+        this.validateUsername = this.validateUsername.bind(this);
+        this.validatePassword = this.validatePassword.bind(this);
+        this.validateForm = this.validateForm.bind(this);
+
         this.state = {
             username: '',
             password: '',
             isLoading: false,
+            showError: false,
+            errorMsg: '',
         };
     }
 
@@ -57,9 +64,9 @@ class Signin extends Component {
      */
     validateForm() {
         if (this.validateUsername()==="success" && this.validatePassword()==="success") {
-            return true;
+            return 'success';
         }
-        return false;
+        return 'error';
     }
 
     /*
@@ -83,6 +90,10 @@ class Signin extends Component {
      */
     signinHandler(event) {
         event.preventDefault();
+        if (this.validateForm() !== 'success') {
+            alert("fields are wrong!");
+            return;
+        }
         this.setState({
             isLoading:true,
         });
@@ -94,10 +105,15 @@ class Signin extends Component {
                 // redirect to homepage
                 this.props.history.push('/')
             })
-            // sign in failure!
+            // sign in failure! --> show helpful error message
             .catch((err) => {
-                console.log("signin failure with error: " + err);
-                alert(err);
+                if (err.message === "User does not exist.") {
+                    this.setState({
+                        isLoading: false,
+                        showError: true,
+                        errorMsg: "Incorrect password."
+                    })
+                }
             });
         }
         catch(err) {
@@ -107,61 +123,34 @@ class Signin extends Component {
 
     render() {
         let isLoading = this.state.isLoading;
+        const emailProps = {
+            inputHandler: this.handleUsername,
+            inputValue: this.state.username,
+            validationState: this.validateUsername,
+        };
+        const passProps = {
+            inputHandler: this.handlePassword,
+            inputValue: this.state.password,
+            validationState: this.validatePassword,
+            showError: this.state.showError,
+            errorMsg: this.state.errorMsg,
+        };
+        const submitProps = {
+            validationState: this.validateForm,
+        };
+        const form = (
+            <SigninForm
+                isLoading={isLoading}
+                emailProps={emailProps}
+                passProps={passProps}
+                submitProps={submitProps}
+                submitHandler={this.signinHandler}
+            />
+        );
+
         return (
             <div>
-                <Form horizontal onSubmit={this.signinHandler}>
-
-                    <FormGroup
-                        controlId="formHorizontalEmail"
-                        validationState={this.validateUsername()}>
-                        <Col componentClass={ControlLabel} sm={2}>
-                            Email
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl
-                                type="email"
-                                value={this.state.username}
-                                placeholder="please enter your email"
-                                onChange={this.handleUsername}>
-                            </FormControl>
-                        </Col>
-                    </FormGroup>
-
-                    <FormGroup
-                        controlId="formHorizontalPassword"
-                        validationState={this.validatePassword()}>
-                        <Col componentClass={ControlLabel} sm={2}>
-                            Password
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl
-                                type="password"
-                                value={this.state.password}
-                                placeholder="please enter your password"
-                                onChange={this.handlePassword}>
-                            </FormControl>
-                        </Col>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Col smOffset={2} sm={2}>
-                            <Checkbox>Remember me</Checkbox>
-                        </Col>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Col smOffset={2} sm={2}>
-                            <Button
-                                type="submit"
-                                bsStyle="primary"
-                                block
-                                disabled={!this.validateForm() || isLoading}>
-                                {isLoading && <i className="fa fa-circle-o-notch fa-spin fa-fw"></i>}
-                                {isLoading?'Signing In':'Sign In'}
-                            </Button>
-                        </Col>
-                    </FormGroup>
-                </Form>
+                {form}
             </div>
         )
     }

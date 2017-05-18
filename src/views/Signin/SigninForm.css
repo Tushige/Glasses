@@ -1,0 +1,44 @@
+#signin-btn {
+    font-size: 24px;
+    height: 50px;
+}
+#signin-btn:hover {
+    background-color: white;
+    border-color:#3163af;
+    color:#3163af;
+}
+/***************************
+ * styling form's dimensions
+ ***************************/
+ #form-container {
+     display: flex;
+     margin: 40px auto auto auto;
+     padding: 30px;
+     width:90%;
+     border-radius: 10px;
+     background-color: white;
+}
+@media screen and (min-width: 600px) {
+    #form-container {
+        width:50%;
+    }
+}
+@media screen and (min-width: 900px) {
+    #form-container {
+        width:40%;
+    }
+}
+@media screen and (min-width: 1200px) {
+    #form-container {
+        width:30%;
+    }
+}
+@media screen and (min-width: 1500px) {
+    #form-container {
+        width:20%;
+    }
+}
+form {
+    width:90%;
+    margin: 0 auto;
+}

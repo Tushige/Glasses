@@ -1,1 +1,43 @@
+#homepage-body {
+    position: absolute;
+    top:80px;
+    margin: 0;
+    padding: 0;
+    height: 1200px;
+    min-width: 100%;
+    background-image: url("./background-med.jpeg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
 
+#intro {
+    text-align: center;
+}
+#intro h1 {
+    font-size:48px;
+    font-weight: 900;
+    color:#111111;
+}
+
+#intro p {
+    font-size:32px;
+    font-weight: 300;
+    color:#11111
+}
+signup-btn-container {
+    text-align: center;
+}
+#signup-btn {
+    width:300px;
+    height: 80px;
+    margin: 40px auto 40px auto;
+}
+#signup-btn a {
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    font-weight: bolder;
+}

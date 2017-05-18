@@ -5,20 +5,22 @@ import {
     FormGroup,
     Button,
     Col,
-    OverlayTrigger,
-    Popover,
-    strong,
 } from 'react-bootstrap';
 import InputField from '../../containers/FormComponents/InputField';
 
-import './SignupForm.css';
-
-class SignupForm extends Component {
+import './SigninForm.css';
+/*
+ * expects the following props:
+ *  1.  isLoading
+ *  2.  inputHandler
+ *  3.  inputValue
+ *  4.  submitHandler
+ */
+class SigninForm extends Component {
     render() {
         let isLoading = this.props.isLoading;
         const emailProps = this.props.emailProps;
         const passProps = this.props.passProps;
-        const vpassProps = this.props.vpassProps;
         const submitProps = this.props.submitProps;
         /*
          * UI elements
@@ -30,7 +32,8 @@ class SignupForm extends Component {
                 value={emailProps.inputValue}
                 placeholder="Email"
                 onChange={emailProps.inputHandler}
-                validationState={emailProps.validationState}>
+                validationState={emailProps.validationState}
+                showError={false}>
             </InputField>
         );
         const PassField = (
@@ -38,45 +41,36 @@ class SignupForm extends Component {
                 type="password"
                 icon={<i className="fa fa-key fa-fw"></i>}
                 value={passProps.inputValue}
-                placeholder="choose a password"
+                placeholder="password"
                 onChange={passProps.inputHandler}
-                validationState={passProps.validationState}>
+                validationState={passProps.validationState}
+                showError={passProps.showError}
+                errorMsg={passProps.errorMsg}>
             </InputField>
         );
-        const VPassField = (
-            <InputField
-                type="password"
-                icon={<i className="fa fa-key fa-fw"></i>}
-                value={vpassProps.inputValue}
-                placeholder="Please verify your password"
-                onChange={vpassProps.inputHandler}
-                validationState={vpassProps.validationState}>
-            </InputField>
-        );
-        const SignupBtn = (
+        const SigninBtn = (
             <FormGroup
                 validationState={submitProps.validationState()}>
-                <Button
-                    id="signup-btn"
+                <Button id="signin-btn"
                     type="submit"
                     bsStyle="primary"
                     block
                     disabled={isLoading}>
                     {isLoading && <i className="fa fa-circle-o-notch fa-spin fa-fw"></i>}
-                    {isLoading ? 'Signing up...':'Sign Up'}
+                    <span>{isLoading ?'Signing In...':'Sign In'}</span>
                 </Button>
             </FormGroup>
         );
+
         return (
-            <div id="form-signup-container">
-                <Form className="signupForm" horizontal onSubmit={this.props.signupHandler}>
+            <div id="form-container">
+                <Form horizontal onSubmit={this.props.submitHandler}>
                     {EmailField}
                     {PassField}
-                    {VPassField}
-                    {SignupBtn}
+                    {SigninBtn}
                 </Form>
             </div>
         );
     }
 }
-export default SignupForm;
+export default SigninForm;
