@@ -1,39 +1,27 @@
-/*
- * change navigation bar height
- */
+/* we expand navbar height*/
 .navbar {
-    min-height:80px;
+    position: relative; /*so that container-fluid can have same size*/
+    min-height: 100px;
+    margin-bottom: 0 !important;
 }
-/*
- * removes the bottom margin
- * there was an unnecessary space at the bottom of the
- * navigation
- */
-.navbar-default {
-    margin: 0 !important;
+.container-fluid {
+    min-height: 100px;
 }
-/*
- * i.e. Glasses
- */
+.navbar-header {
+    min-height: 100px;
+}
+/* vertically center the brand title*/
 #brand-title {
-    color:#383838;
     font-size: 32px;
-    font-weight: bold;
+    line-height: 64px;
+    white-space: nowrap;
 }
-/*
-* vertically center the brand title
-* value determine from
-*  1. navbar height
-*  2. brand text height
-*/
-.navbar-brand {
-    line-height: 48px;
+.navbar-collapse ul li {
+    min-height: 100px;
 }
-
-/*
- * set min-height to be equal to navbar height
- */
-a {
-    font-size: 18px;
-    font-weight: bold;
+/* vertically center the navigation items*/
+.navitem a{
+    font-size: 24px;
+    top: 24px;
+    white-space: nowrap;
 }

@@ -4,7 +4,10 @@
  *  page
  *******************************************************************************/
 import React, { Component } from 'react';
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import {Nav,
+        Navbar,
+        NavItem,
+} from 'react-bootstrap';
 import {Link } from 'react-router-dom';
 import {LinkContainer} from 'react-router-bootstrap';
 import './NavigationBar.css';
@@ -12,14 +15,14 @@ import './NavigationBar.css';
 class NavigationBar extends Component {
     render() {
         const signupBtn = (
-            <LinkContainer to="/signup">
+            <LinkContainer to="/signup" className="navitem">
                 <NavItem>
                     Sign Up
                 </NavItem>
             </LinkContainer>
         );
         const signinBtn = (
-            <LinkContainer to="/signin">
+            <LinkContainer to="/signin" className="navitem">
                 <NavItem>
                     Sign In
                 </NavItem>
@@ -33,7 +36,7 @@ class NavigationBar extends Component {
         );
         const brand = (
             <Link id="brand-title" to="/">
-                Glasses
+                GLASSES
             </Link>
         );
         return (
@@ -44,7 +47,7 @@ class NavigationBar extends Component {
                 </Navbar.Brand>
                 <Navbar.Toggle />
             </Navbar.Header>
-            
+
                 <Navbar.Collapse>
                     {nav}
                 </Navbar.Collapse>

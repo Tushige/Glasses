@@ -9,6 +9,7 @@
      border-radius: 10px;
      background-color: white;
 }
+/* size of form will change based on window size */
 @media screen and (min-width: 600px) {
     #form-signup-container {
         width:50%;
