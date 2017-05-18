@@ -1,4 +1,4 @@
-#homepage-body {
+#homepage-content {
     position: absolute;
     top:80px;
     margin: 0;
@@ -13,31 +13,69 @@
     background-repeat: no-repeat;
 }
 
+/* default intro container style */
 #intro {
+    display: flex;
+    width: 70%;
+    flex-wrap: wrap;
+    margin: 0 auto;
     text-align: center;
 }
 #intro h1 {
+    color:#08101c;
     font-size:48px;
-    font-weight: 900;
-    color:#111111;
+    font-weight: bold;
 }
 
 #intro p {
-    font-size:32px;
-    font-weight: 300;
+    font-size:24px;
+    font-weight: bold;
     color:#11111
 }
-signup-btn-container {
-    text-align: center;
-}
-#signup-btn {
-    width:300px;
-    height: 80px;
+
+#homepage-signup-btn {
+    width:100%;
+    height: 60px;
+    overflow: hidden;
     margin: 40px auto 40px auto;
+    transition: 0.3s;
 }
-#signup-btn a {
+#homepage-signup-btn  a {
     text-decoration: none;
     color: white;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: bolder;
+}
+/* on smaller devices, text font will be smaller*/
+@media screen and (max-width: 600px) {
+    #homepage-content {
+        background: url('./background-sm.jpeg');
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+    }
+    #intro h1 {
+        font-size:30px;
+    }
+    #intro p {
+        font-size:18px;
+    }
+    #homepage-signup-btn  a {
+        font-size: 18px;
+    }
+}
+/* update intro text size based on window size*/
+@media screen and (min-width: 1000px) {
+    #intro {
+        width: 50%;
+    }
+}
+@media screen and (min-width: 1400px) {
+    #intro {
+        width: 40%;
+    }
+}
+@media screen and (min-width: 1800px) {
+    #intro {
+        width: 30%;
+    }
 }
