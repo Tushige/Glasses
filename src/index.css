@@ -2,4 +2,5 @@ html, body {
   font-family: sans-serif;
   font-family:'Lato', sans-serif;
   background-color: #e5e5e5;
+  min-height: 100%;
 }

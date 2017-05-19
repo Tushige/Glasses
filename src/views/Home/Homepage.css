@@ -1,15 +1,16 @@
-#homepage-content {
-    position: absolute;
-    /*top:80px;*/
+#homepage-container {
+    width: 100%;
+    border: 1px solid green;
     margin: 0;
     padding: 0;
-    height: 1200px;
+    top: 0;
+}
+#homepage-content {
     min-width: 100%;
+    min-height: 1200px;
+    margin: 0;
     background-image: url("./background-med.jpeg");
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: 100% 100%;
+    background-size: cover;
     background-repeat: no-repeat;
 }
 
@@ -78,4 +79,24 @@
     #intro {
         width: 30%;
     }
+}
+/*footer styling*/
+footer {
+    position: relative;
+    margin:0;
+    padding: 15px;
+    width: 100%;
+    background-color: white;
+}
+/* footer text */
+footer span {
+    font-weight: bold;
+    line-height: 1rem;
+    font-size: 1.75rem;
+    color: #586062;
+}
+/* heart icon */
+.fa-heart {
+    color: #ff214c;
+    margin: 10px;
 }

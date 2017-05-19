@@ -24,11 +24,17 @@
 /* vertically center the navigation items*/
 .navitem a{
     font-size: 24px;
+    font-weight: 300;
     top: 24px;
     line-height: 48px;
     transition: 0.3s;
 }
-/*by default, the anchor element's background is gray, remove it*/
+/* on mouse over, darken the text*/
+.navitem a:hover {
+    font-weight: 400;
+    transition: 0.3s;
+}
+/*by default, the anchor element's background is gray on select, remove it*/
 .navbar-collapse ul li.navitem.active a{
     background: none !important;
 }

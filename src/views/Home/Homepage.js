@@ -21,13 +21,20 @@ function SignupBtn(props) {
 class Homepage extends Component {
     render() {
         return (
-            <div id="homepage-content">
-                <div id="intro">
-                    <h1 id=""> Keep your reading list in one place.</h1>
-                    <p>Inspiration strikes anywhere. Glasses lets you capture
-                    nurture, and share your ideas across any device.</p>
-                    <SignupBtn/>
+            <div id="homepage-container">
+                <div id="homepage-content">
+                    <div id="intro">
+                        <h1 id=""> Keep your reading list in one place.</h1>
+                        <p>Inspiration strikes anywhere. Glasses lets you capture
+                        nurture, and share your ideas across any device.</p>
+                        <SignupBtn/>
+                    </div>
                 </div>
+                <footer>
+                    <span>Made with<i className="fa fa-heart" aria-hidden="true"> </i>
+                    By Tushig Ochirkhuyag
+                    </span>
+                </footer>
             </div>
         )
     }
