@@ -3,11 +3,10 @@
  *
  *  Contains the component that is responsible for routing urls to views
  *******************************************************************************/
-import React, { Component } from 'react';
+import React from 'react';
 import {Route,
         Switch,
         withRouter,
-        Redirect,
 } from 'react-router-dom';
 
 import Homepage from './views/Home/Homepage';

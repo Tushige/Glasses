@@ -20,12 +20,19 @@ function SignupBtn(props) {
 }
 class Homepage extends Component {
     render() {
+        /**
+         * @var auth_user - content shown to signed in user
+         */
         const auth_user = null;
+        /**
+         * @var anon_user - content shown to anonymous user
+         */
         const anon_user = (
             <div id="intro">
             <h1 id=""> Keep your reading list in one place.</h1>
-            <p>Inspiration strikes anywhere. Glasses lets you capture
-            nurture, and share your ideas across any device.</p>
+            <p>Tired of forgetting where you bookmarked a good read?
+            Glasses lets you save all of your readings in one place,
+            and access them on any device.</p>
             <SignupBtn/>
             </div>
         );
@@ -37,7 +44,7 @@ class Homepage extends Component {
                 </div>
                 <footer>
                     <span>Made with<i className="fa fa-heart" aria-hidden="true"> </i>
-                    By Tushig Ochirkhuyag
+                    by Tushig Ochirkhuyag
                     </span>
                 </footer>
             </div>
