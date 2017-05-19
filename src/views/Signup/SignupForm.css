@@ -40,6 +40,7 @@
     height: 50px;
     font-size: 24px;
     font-color:white;
+    transition: 0.3s;
 }
 #signup-btn:hover {
     border-color:#3163af;

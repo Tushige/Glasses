@@ -3,10 +3,11 @@
  *
  *  Contains the component and logic of user signup
  *
- * Flow of User signUp:
- *  1.
- *  2.
- *  3.
+ *  Flow of User signUp:
+ *      1.  register with AWS Cognito
+ *      2.  receive verification code via email
+ *      3.  match verification code against AWS Cognito
+ *      4.  sign user in
  *******************************************************************************/
 import React, {Component} from 'react';
 
@@ -19,6 +20,14 @@ import VerificationForm from './VerificationForm';
 import {withRouter,
 } from 'react-router-dom';
 import './Signup.css';
+
+/* error messages to show per input type */
+const error_messages = {
+    email: "user already exists",
+    pass: "password must be at least 8 characters long",
+    vpass: "passwords do not match",
+    verifyCode: "verification code doesn't match"
+};
 
 class Signup extends Component {
     constructor(props) {
@@ -49,7 +58,10 @@ class Signup extends Component {
             isVerified: false,
             isSignedUp: false,
 
-            showError: false,
+            error_email: '',
+            error_pass:  '',
+            error_vpass: '',
+            error_verify: '',
         };
     }
 
@@ -76,6 +88,7 @@ class Signup extends Component {
             verificationCode: event.target.value,
         });
     }
+
     /*
      * check if email is valid
      */
@@ -85,45 +98,58 @@ class Signup extends Component {
         else if(len>3) return "warning";
         else if(len>0) return "error";
     }
+
     /*
      * check if password is valid
      */
     validatePassword() {
         const len = this.state.password.length;
-        if (len>8) return "success";
-        else if(len>3) return "warning";
-        else if(len>0) return "error";
+        if (len>8) {
+            return 'success';
+        }
+        else if(len>0) {
+            return "error";
+        }
     }
+
     /*
      * check if verify password is valid
      */
     validateVPassword() {
-        if (this.state.password && this.state.vpassword === this.state.password)
+        if (this.state.password && this.state.vpassword === this.state.password) {
             return 'success';
-        else if(this.state.vpassword)
+        }
+        else if(this.state.vpassword) {
             return "error";
+        }
     }
-    /*
-     * User input validation methods
+
+    /**
+     *  @function - checks if the fiels are valid
+     *            - assigns error message for each invalid input
+     *  @return {String} 'success' if inputs are valid
+     *          {String} 'error' if any one input is invalid
      */
-     /*validatePassword() {
-         if (this.state.password===this.state.vpassword) {
-             return 'success';
-         } else {
-             return 'error';
-         }
-     }*/
-     validateForm() {
+    validateForm() {
         const email = this.validateEmail();
         const pass = this.validatePassword();
         const vpass = this.validateVPassword();
         if (email === 'success' && pass==='success' && vpass==='success') {
             return 'success';
         }
-        else {
-            return 'error';
+        if (pass !=='success') {
+            this.setState({
+                error_pass:error_messages.pass,
+            });
         }
+        if (vpass !== 'success') {
+            this.setState({
+                error_vpass: error_messages.vpass,
+            });
+        }
+        return 'error';
      }
+
     /**
      *  Signup submit button handler
      *  This creates a new CognitoUser object
@@ -131,14 +157,17 @@ class Signup extends Component {
      */
      signupHandler(event) {
          event.preventDefault();    // prevents page reload while waiting for async request
-         if (this.validateForm() !=='success') {
-             alert("input fields are wrong")
-             return;
-         }
          this.setState({         // displays visual feedback while waiting
              isLoading: true,
          });
-
+         /* don't interact with AWS if inputs are invalid */
+         if (this.validateForm() !=='success') {
+             this.setState({
+                 isLoading: false,
+             });
+             return;
+         }
+         /* if valid inputs, signup with AWS */
          const userPool = createUserPool();
          const attributeEmail = createCognitoUserAttribute('email', this.state.email);
          const username = this.state.email;
@@ -159,12 +188,9 @@ class Signup extends Component {
              // we need to display informative error message on signup failure
              // instead of just alert
              this.setState({
-                 cognitoUser: null,
                  isLoading: false,
-                 isSignedUp: false,
-                 showError: true,
-             })
-             alert(err);
+                 error_email: error_messages.email,
+             });
          });
      }
      /**
@@ -214,7 +240,9 @@ class Signup extends Component {
          })
          // authentication failed!
          .catch((err) => {
-            alert(err);
+            this.setState({
+                error_verify:error_messages.verifyCode,
+            });
          });
     }
 
@@ -256,6 +284,7 @@ class Signup extends Component {
                     submitHandler={this.verifySubmitHandler}
                     childProps={verificationProps}
                     isLoading={isLoading}
+                    errorMsg={this.state.error_verify}
                 />
             );
         } else {    // show signup form
@@ -263,19 +292,19 @@ class Signup extends Component {
                 inputValue: this.state.email,
                 inputHandler: this.emailHandler,
                 validationState: this.validateEmail,
+                errorMsg: this.state.error_email,
             };
             const passProps = {
                 inputValue: this.state.password,
                 inputHandler: this.passwordHandler,
                 validationState: this.validatePassword,
+                errorMsg: this.state.error_pass,
             };
             const vpassProps = {
                 inputValue: this.state.vpassword,
                 inputHandler: this.vpasswordHandler,
                 validationState: this.validateVPassword,
-            };
-            const submitProps = {
-                validationState: this.validateForm,
+                errorMsg: this.state.error_vpass,
             };
             userForm = (
                 <SignupForm signupHandler={this.signupHandler}
@@ -283,7 +312,6 @@ class Signup extends Component {
                     emailProps={emailProps}
                     passProps={passProps}
                     vpassProps={vpassProps}
-                    submitProps={submitProps}
                     isLoading={isLoading}
                 />
             );

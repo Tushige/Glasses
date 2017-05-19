@@ -8,13 +8,12 @@ import {
     FormControl,
     FormGroup,
     HelpBlock,
-    strong,
 } from 'react-bootstrap';
 import './InputField.css';
 
 export default function InputField(props) {
     let err = null;
-    if (props.showError) {
+    if (props.errorMsg) {
         err = <HelpBlock className="error-msg">{props.errorMsg}</HelpBlock>;
     }
     return (

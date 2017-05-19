@@ -8,7 +8,6 @@ import './sidebar.css';
 import {Link,
         withRouter,
 } from 'react-router-dom';
-import {Button} from 'react-bootstrap';
 import {getSignedInUser} from '../../libs/user';
 import AWS from 'aws-sdk';
 
@@ -100,7 +99,7 @@ class Sidebar extends Component {
     }
 
     render() {
-        let navbtn;
+        let navBtn;
         const btnOpen = (
             <i className="fa fa-bars fa-3x"
                aria-hidden="true"
@@ -117,7 +116,7 @@ class Sidebar extends Component {
                onClick={this.sidebarToggleHandler}>
             </i>
         )
-        let navBtn = this.state.isOpen ? btnClose : btnOpen;
+        navBtn = this.state.isOpen ? btnClose : btnOpen;
         const brand = (
             <div>
                 <h2 id="sidebar-title">
@@ -158,7 +157,7 @@ class Sidebar extends Component {
                 </span>
             </Link>
         );
-        
+
         return (
             <div className="userHomepage">
                 <div id="sidebar" style={this.state.sidebar_style}>

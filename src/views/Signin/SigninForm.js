@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import {
     Form,
-    FormControl,
     FormGroup,
     Button,
-    Col,
 } from 'react-bootstrap';
 import InputField from '../../containers/FormComponents/InputField';
 
@@ -21,7 +19,6 @@ class SigninForm extends Component {
         let isLoading = this.props.isLoading;
         const emailProps = this.props.emailProps;
         const passProps = this.props.passProps;
-        const submitProps = this.props.submitProps;
         /*
          * UI elements
          */
@@ -49,8 +46,7 @@ class SigninForm extends Component {
             </InputField>
         );
         const SigninBtn = (
-            <FormGroup
-                validationState={submitProps.validationState()}>
+            <FormGroup>
                 <Button id="signin-btn"
                     type="submit"
                     bsStyle="primary"

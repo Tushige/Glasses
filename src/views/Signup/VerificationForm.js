@@ -3,7 +3,6 @@ import {
     Form,
     FormGroup,
     Button,
-    Col,
 } from 'react-bootstrap';
 import InputField from '../../containers/FormComponents/InputField';
 
@@ -16,7 +15,8 @@ class VerificationForm extends Component {
                 icon={<i className="fa fa-handshake-o" aria-hidden="true"></i>}
                 value={this.props.childProps.inputValue}
                 placeholder="Verification Code"
-                onChange={this.props.childProps.inputHandler}>
+                onChange={this.props.childProps.inputHandler}
+                errorMsg={this.props.childProps.errorMsg}>
             </InputField>
         );
         const submitBtn = (

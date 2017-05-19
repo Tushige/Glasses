@@ -9,9 +9,6 @@ import {Link,
 import './ReadingItem.css';
 
 export default function(props) {
-    let childProps = {
-        title: props.item.title,
-    };
     const readingUrl = '/reading/'+props.item.readingId;
     return (
         <div>

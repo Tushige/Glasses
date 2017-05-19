@@ -1,31 +1,30 @@
 /*******************************************************************************
- * This file contains the component and logic of user signin
+ * @file Signin.js
+ *
+ * Contains the component and logic of user signin
  *******************************************************************************/
-import React, {Component} from 'react';
-import {
-    Form,
-    FormGroup,
-    FormControl,
-    ControlLabel,
-    Button,
-    Checkbox,
-    Col,
-} from 'react-bootstrap';
+import React, {Component,
+} from 'react';
 import SigninForm from './SigninForm';
 /*
  * withRouter gives us history info in our Signin component's props
  */
-import {withRouter} from 'react-router-dom';
+import {withRouter,
+} from 'react-router-dom';
 
-import {authenticateUser} from '../../libs/user';
+import {authenticateUser,
+} from '../../libs/user';
 
 class Signin extends Component {
     constructor(props) {
         super(props);
 
+        /* input handlers */
         this.handleUsername = this.handleUsername.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.signinHandler = this.signinHandler.bind(this);
+
+        /* input validators*/
         this.validateUsername = this.validateUsername.bind(this);
         this.validatePassword = this.validatePassword.bind(this);
         this.validateForm = this.validateForm.bind(this);
@@ -34,13 +33,12 @@ class Signin extends Component {
             username: '',
             password: '',
             isLoading: false,
-            showError: false,
             errorMsg: '',
         };
     }
 
-    /*
-     * check if password is valid
+    /**
+     * check if username is valid
      */
     validateUsername() {
         const len = this.state.username.length;
@@ -55,7 +53,6 @@ class Signin extends Component {
     validatePassword() {
         const len = this.state.password.length;
         if (len>8) return "success";
-        else if(len>3) return "warning";
         else if(len>0) return "error";
     }
 
@@ -90,13 +87,18 @@ class Signin extends Component {
      */
     signinHandler(event) {
         event.preventDefault();
-        if (this.validateForm() !== 'success') {
-            alert("fields are wrong!");
-            return;
-        }
         this.setState({
             isLoading:true,
         });
+        /* show error message*/
+        if (this.validateForm() !== 'success') {
+            this.setState({
+                isLoading: false,
+                errorMsg: "password must be at least 8 characters long."
+            });
+            return;
+        }
+        /* if inputs are valid, validate against AWS*/
         try {
             var signinPromise = authenticateUser(undefined, this.state.username, this.state.password);
             // signin success!
@@ -107,17 +109,17 @@ class Signin extends Component {
             })
             // sign in failure! --> show helpful error message
             .catch((err) => {
-                if (err.message === "User does not exist.") {
-                    this.setState({
-                        isLoading: false,
-                        showError: true,
-                        errorMsg: "Incorrect password."
-                    })
-                }
+                this.setState({
+                    isLoading: false,
+                    errorMsg:err.message,
+                });
             });
         }
         catch(err) {
-            alert(err);
+            this.setState({
+                isLoading: false,
+                errorMsg:err.message,
+            });
         }
     }
 
@@ -132,7 +134,6 @@ class Signin extends Component {
             inputHandler: this.handlePassword,
             inputValue: this.state.password,
             validationState: this.validatePassword,
-            showError: this.state.showError,
             errorMsg: this.state.errorMsg,
         };
         const submitProps = {

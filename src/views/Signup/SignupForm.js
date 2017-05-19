@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 import {
     Form,
-    FormControl,
     FormGroup,
     Button,
-    Col,
-    OverlayTrigger,
-    Popover,
-    strong,
 } from 'react-bootstrap';
 import InputField from '../../containers/FormComponents/InputField';
 
@@ -19,7 +14,6 @@ class SignupForm extends Component {
         const emailProps = this.props.emailProps;
         const passProps = this.props.passProps;
         const vpassProps = this.props.vpassProps;
-        const submitProps = this.props.submitProps;
         /*
          * UI elements
          */
@@ -30,7 +24,8 @@ class SignupForm extends Component {
                 value={emailProps.inputValue}
                 placeholder="Email"
                 onChange={emailProps.inputHandler}
-                validationState={emailProps.validationState}>
+                validationState={emailProps.validationState}
+                errorMsg={emailProps.errorMsg}>
             </InputField>
         );
         const PassField = (
@@ -40,7 +35,8 @@ class SignupForm extends Component {
                 value={passProps.inputValue}
                 placeholder="choose a password"
                 onChange={passProps.inputHandler}
-                validationState={passProps.validationState}>
+                validationState={passProps.validationState}
+                errorMsg={passProps.errorMsg}>
             </InputField>
         );
         const VPassField = (
@@ -50,12 +46,12 @@ class SignupForm extends Component {
                 value={vpassProps.inputValue}
                 placeholder="Please verify your password"
                 onChange={vpassProps.inputHandler}
-                validationState={vpassProps.validationState}>
+                validationState={vpassProps.validationState}
+                errorMsg={vpassProps.errorMsg}>
             </InputField>
         );
         const SignupBtn = (
-            <FormGroup
-                validationState={submitProps.validationState()}>
+            <FormGroup>
                 <Button
                     id="signup-btn"
                     type="submit"
