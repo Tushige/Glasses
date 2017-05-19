@@ -85,7 +85,12 @@ class App extends Component {
                 updateUserToken={this.updateUserToken}>
             </Sidebar>
         );
-        // display sideBar if user present, else display top navigation bar
+
+        /**
+         *  @var navigation - picks a navigation based on user type
+         *      1. sidebar - signed in user
+         *      2. top navbar - anonymous user
+         */
         navigation = isSignedin ? sideBar : topBar;
 
         const childProps = {
@@ -94,7 +99,7 @@ class App extends Component {
             updateUserToken: this.updateUserToken,
         };
         /**
-         * @var appContainer - Main content
+         *  @var appContainer - Main content
          */
         const appContainer = (
             <div>

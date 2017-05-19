@@ -1,3 +1,6 @@
+/*
+ * one row containing title of one reading entry
+ */
 .title-container {
     width:100%;
     line-height: 30px;
@@ -20,9 +23,19 @@
 .title a:hover {
     color: #7c92b2;
 }
+/* the line separating reading items in the list */
 hr {
     border: 0;
     height: 1px;
     background: #333;
     background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+/* initial mount animation */
+.readingItem-animation-appear {
+    opacity: 0.01;
+}
+.readingItem-animation-appear.readingItem-animation-appear-active {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
 }

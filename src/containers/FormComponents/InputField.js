@@ -32,7 +32,6 @@ export default function InputField(props) {
                     </FormControl>
                 </div>
                 {err}
-                <FormControl.Feedback />
             </FormGroup>
         </div>
     )
